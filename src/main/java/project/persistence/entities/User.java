@@ -3,14 +3,9 @@ package project.persistence.entities;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.Date;
-import java.sql.Timestamp;
 
 /**
  * Maybe we should implement User form spring core instead?
@@ -44,30 +39,6 @@ public class User implements UserDetails {
     private Boolean enabled;
 
 
-    /*
-    When a user creates a pending bet or a pending bet is sent to him, the user's id and the bet's id are stored in a
-    two column table created here.
-    */
-    @ManyToMany
-    @JoinTable(
-            name = "user_pending_bet",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "pending_bet_id", referencedColumnName = "pending_bet_id"))
-    private Set<PendingBet> pendingBets;
-
-
-
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_bet",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns =  @JoinColumn(
-                    name = "bet_id", referencedColumnName = "bet_id"))
-    private Set<Bet> bets;
-
 
     @ManyToMany
     @JoinTable(
@@ -77,9 +48,6 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(
                 name = "role", referencedColumnName = "role"))
     private Set<Role> roles;
-
-
-
 
 
 
@@ -109,106 +77,6 @@ public class User implements UserDetails {
         return authorities;
     }
 
-    public Set<Bet> getResolvedBets(){
-        Set<Bet> resolvedBets = new HashSet<>();
-        for(Bet b : getBets()){
-            if(b.isHasBeenResolved()){
-                resolvedBets.add(b);
-            }
-        }
-        return resolvedBets;
-    }
-
-
-//    public Set<Bet> getActiveBets(){
-//        Set<Bet> activeBets = new HashSet<>();
-//        for(Bet b : getBets()){
-//            if(!b.isHasBeenResolved()){
-//                activeBets.add(b);
-//            }
-//        }
-//        return activeBets;
-//    }
-
-    //method that finds active bets and puts them in two sets
-    //one set is bets that should be resolved according to their date
-    //other should not be resolved.
-    //Takes the DateTimeResolved attribute that is a string and creates a
-    //Gregorian time calender object,
-    //does the same with time now.
-    //There is most def a better solution.
-    //Maybe store the dateTimeResolved as Date not string, i could not get it to work....
-    public ArrayList<ArrayList<Bet>> getActiveBets(){
-        ArrayList<Bet> betsThatShouldBeResolved = new ArrayList<>();
-        ArrayList<Bet> betsThatShouldNotBeResolved = new ArrayList<>();
-        for(Bet b : getBets()){
-
-            String now = ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-
-            //faranleg lausn, virkar  en, todo finna betri lausn
-            String[] resolveDateTime = b.getDateAndTimeResolve().split("T");
-            String[] resolveDate = resolveDateTime[0].split("-");
-            String[] resolveTime = resolveDateTime[1].split(":");
-            String[] nowDateTime = now.split("T");
-            String[] nowDate = nowDateTime[0].split("-");
-            String[] nowTime = nowDateTime[1].split(":");
-
-            GregorianCalendar nowGerg = new GregorianCalendar(Integer.parseInt(nowDate[0]),Integer.parseInt(nowDate[1]),Integer.parseInt(nowDate[2]),Integer.parseInt(nowTime[0]),Integer.parseInt(nowTime[1]));
-            GregorianCalendar resolveGreg = new GregorianCalendar(Integer.parseInt(resolveDate[0]),Integer.parseInt(resolveDate[1]),Integer.parseInt(resolveDate[2]),Integer.parseInt(resolveTime[0]),Integer.parseInt(resolveTime[1]));
-
-            System.out.println("nowGerg.after(resolveGreg)"  +nowGerg.after(resolveGreg));
-            if(nowGerg.after(resolveGreg) && !b.isHasBeenResolved()){
-                System.out.println("bet should be resolved");
-                betsThatShouldBeResolved.add(b);
-            } else if(!nowGerg.after(resolveGreg) && !b.isHasBeenResolved()){
-                System.out.println("bet should not be");
-                betsThatShouldNotBeResolved.add(b);
-            }
-        }
-
-        ArrayList<ArrayList<Bet>> bothBets = new ArrayList<>();
-        bothBets.add(betsThatShouldBeResolved);
-        bothBets.add(betsThatShouldNotBeResolved);
-        return bothBets;
-    }
-
-
-    public Set<PendingBet> getPendingBets() {
-        return pendingBets;
-    }
-
-
-    //pending bet's that the user has sent and is waiting for the other user to accept, counter or decline.
-    public Set<PendingBet> getWaitingPendingBets(){
-        Set<PendingBet> waitingPendingBets = new HashSet<>();
-        for(PendingBet p : getPendingBets()){
-            if(p.hasUserAcceptedPendingBet(this)){
-                waitingPendingBets.add(p);
-            }
-        }
-        return waitingPendingBets;
-    }
-
-    public Set<PendingBet> getNotWaitingPendingBets(){
-        Set<PendingBet> notWaitingPendingBets = new HashSet<>();
-        for(PendingBet p : getPendingBets()){
-            if(!p.hasUserAcceptedPendingBet(this)){
-                notWaitingPendingBets.add(p);
-            }
-        }
-        return notWaitingPendingBets;
-    }
-
-
-    // When deleting a pending bet it needs to be removed from the set stored with the user.
-    @Transactional
-    public void removePendingBet(PendingBet pendingBet){
-        pendingBets.remove(pendingBet);
-    }
-
-    public void setPendingBets(Set<PendingBet> pendingBets) {
-        this.pendingBets = pendingBets;
-    }
 
     public Long getId() {
         return id;
@@ -287,19 +155,4 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public Set<Bet> getBets() {
-        return bets;
-    }
-
-    public void setBets(Set<Bet> bets) {
-        this.bets = bets;
-    }
-
-    public void removeCredit(double removeCredit){
-        this.credit = this.credit - removeCredit;
-    }
-
-    public void addCredit(double addCredit){
-        this.credit = this.credit + addCredit;
-    }
 }
