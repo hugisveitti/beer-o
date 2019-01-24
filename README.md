@@ -1,8 +1,8 @@
-# bet-yo-ass
-Verkefni hugbúnaðarverkefni í HÍ
+# beer-o
+Verkefni hugbúnaðarverkefni 2 í HÍ
 
-## Peer to peer betting síða
-Hægt að búa til bet milli vina og setja undir 'yo-ass-credits', sem er gjaldmiðill forritsins.
+## Bjór umsagnasíða tengd við vínbúðina
+Hægt að gefa bjór stjörnur og skrifa umsagnir. Vínbúðarsíðan scrapuð og upplýsingar þaðan notaðar.
 
 ## How do I get this ?
 Your IDE ([IntelliJ](https://www.jetbrains.com/idea/), [Eclipse](https://eclipse.org/), [Spring Tool Suit](https://spring.io/tools)) should be able to clone a project from Github.
