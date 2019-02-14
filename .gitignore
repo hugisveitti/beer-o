@@ -26,3 +26,7 @@ application.properties
 /resources/application.properties
 .idea/workspace.xml
 *.class
+local.properties
+.idea/caches/
+.idea/gradle.xml
+.idea/libraries
