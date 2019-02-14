@@ -16,7 +16,7 @@ import java.util.*;
  * Be sure to annotate any entities you have with the @Entity annotation.
  */
 @Entity
-@Table(name = "user_account") // If you want to specify a table name, you can do so here
+@Table(name = "users") // If you want to specify a table name, you can do so here
 public class User implements UserDetails {
 
 
@@ -33,7 +33,6 @@ public class User implements UserDetails {
 
     private String password;
 
-    private double credit;
 
     @Column(name="enabled")
     private Boolean enabled;
@@ -58,7 +57,7 @@ public class User implements UserDetails {
         this.password = password;
 
         //maybe change, 100 to begin with
-        this.credit = 100;
+
         this.enabled = true;
     }
 
@@ -113,14 +112,6 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-
-    public double getCredit() {
-        return credit;
-    }
-
-    public void setCredit(double credit) {
-        this.credit = credit;
-    }
 
     @Override
     public String toString(){

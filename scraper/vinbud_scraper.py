@@ -18,6 +18,7 @@ for i in range(20):
     for product in soup.find_all('li', class_="product"):
         title_a = product.find('a', class_="title")
         title = title_a.find_all('span')[0].text
+        link = title_a['href']
         price = product.find('span', class_="price").text
         volume = product.find('span', class_="volume").text
         alcohol = product.find('span', class_="alcohol").text
@@ -25,25 +26,41 @@ for i in range(20):
         #það eru svigar utan um product number
         product_number = product_number[1:len(product_number)-1]
 
-        text = product.find('span', class_="text")
 
-        # print(product)
-        # print(price)
-        # print(volume)
-        # print(alcohol)
-        # print(product_number)
-        #
-        # # text er einhversskonar tegund af bjór og ekki allt er með þetta
-        # print(text)
-        #
-        # print()
+        taste = product.find("a", class_="taste")
+        if taste:
+            taste = taste.text
+        else:
+            taste = ""
+
+        # text = product.find('span', class_="text")
+        # if text:
+        #     text = text.text
+        # else:
+        #     text = ""
+
+        print("title",title)
+        # print("product",product)
+        print("price",price)
+        print("volume",volume)
+        print("alcohol",alcohol)
+        print("product_number", product_number)
+
+        # text er einhversskonar tegund af bjór og ekki allt er með þetta
+        # print("text ", text)
+        print("taste", taste)
+        print("link_to_vinbudin", link)
+
+        print()
 
         beer = {
         "title": title,
         "price":price,
         "volume": volume,
         "alcohol": alcohol,
-        "product_number": product_number
+        "product_number": product_number,
+        "taste":taste,
+        "link_to_vinbudin": link
         }
 
         allBeers.append(beer)
@@ -52,7 +69,7 @@ for i in range(20):
     print(next_button)
     next_button[0].click()
     #fer eftir internet tengingu hvad tharf ad sleepa lengi
-    sleep(0.1)
+    sleep(0.4)
 
 
 with open('data.json', 'w') as outfile:

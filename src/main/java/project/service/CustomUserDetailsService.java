@@ -1,10 +1,7 @@
 package project.service;
 
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import project.persistence.entities.Role;
 import project.persistence.entities.User;
 
 import org.springframework.security.core.userdetails.UserDetailsService;

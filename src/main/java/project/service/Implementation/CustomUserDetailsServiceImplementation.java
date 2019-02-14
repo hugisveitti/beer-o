@@ -54,7 +54,6 @@ public class CustomUserDetailsServiceImplementation implements CustomUserDetails
         newRoles.add(role);
         user.setRoles(newRoles);
         user.setEnabled(true);
-        user.setCredit(100);
         //check if username is already in database
         if(repository.findByUsername(user.getUsername()) != null){
             throw new UserExsitsException("Username taken");
