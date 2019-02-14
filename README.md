@@ -1,4 +1,4 @@
-# beer-o
+﻿# beer-o
 Verkefni hugbúnaðarverkefni 2 í HÍ
 
 ## Bjór umsagnasíða tengd við vínbúðina
@@ -11,6 +11,9 @@ It's also possible to download the project as a .zip [here](https://github.com/m
 
 ## How do I run this ?
 You have to have postgres downloaded on your machine and a db called HBV with username "postgres" and password "postgres" <br />
+
+## Best app you have ever seen
+
 the tables are made automatically <br /> 
 This project is setup using [Maven](https://maven.apache.org/what-is-maven.html) as a dependency manager, so if your IDE does not manage that, or you don't have it installed you can look [here](https://maven.apache.org/install.html) for further information.
 When all the dependencies are downloaded, you can run the project by running the ``main()`` method in the class ``Application`` and then enter [localhost:8080](http://localhost:8080) into the address bar of your favorite web browser.
