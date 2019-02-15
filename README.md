@@ -16,7 +16,24 @@ the tables are made automatically <br />
 This project is setup using [Maven](https://maven.apache.org/what-is-maven.html) as a dependency manager, so if your IDE does not manage that, or you don't have it installed you can look [here](https://maven.apache.org/install.html) for further information.
 When all the dependencies are downloaded, you can run the project by running the ``main()`` method in the class ``Application`` and then enter [localhost:8080](http://localhost:8080) into the address bar of your favorite web browser.
 
+### Populating the beer database
+You have to have installed a couple of python packages
+```$xslt
+pip psycopg2
+pip selenium
+pip bs4
+```
 
+Then you need to go into the scraper folder and run
+```$xslt
+python vinbud_scraper.py
+```
+
+Then go into database folder and run
+```$xslt
+python createTables.py
+python insertData.py
+```
 
 ### More info
 There are two users loaded in the beginning, they are <br />
