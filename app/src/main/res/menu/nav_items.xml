@@ -7,9 +7,11 @@
         android:icon="@drawable/baseline_home_black_18dp"
         android:title="@string/nav_home" />
     <item
+        android:id="@+id/nav_search"
         android:icon="@drawable/baseline_search_black_18dp"
         android:title="@string/nav_search" />
     <item
+        android:id="@+id/nav_my_page"
         android:icon="@drawable/baseline_accessible_black_18dp"
         android:title="@string/nav_my_page" />
 </menu>

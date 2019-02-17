@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button test_Button;
 
+    private MenuItem nav_search;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
-
         test_Button = (Button) findViewById(R.id.test_button);
+        nav_search = (MenuItem) findViewById(R.id.nav_search);
 
         test_Button.setOnClickListener(new View.OnClickListener() {
              @Override
+
+//             nav_search.
              public void onClick(View view) {
                  Toast.makeText(MainActivity.this, "testing", Toast.LENGTH_SHORT).show();
              }
@@ -39,11 +43,19 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 
-                Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                if (item.getItemId() == R.id.nav_search) {
+                    Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+                    return true;
+                }
 
-                Toast.makeText(MainActivity.this, String.valueOf(item), Toast.LENGTH_SHORT).show();
-                return true;
+                if (item.getItemId() == R.id.nav_my_page) {
+                    Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+                    return true;
+                }
+
+                return false;
 
             }
         });
