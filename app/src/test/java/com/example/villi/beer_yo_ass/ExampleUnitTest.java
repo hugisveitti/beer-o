@@ -1,4 +1,4 @@
-package com.example.villi.beer_yo_ass_app;
+package com.example.villi.beer_yo_ass;
 
 import org.junit.Test;
 

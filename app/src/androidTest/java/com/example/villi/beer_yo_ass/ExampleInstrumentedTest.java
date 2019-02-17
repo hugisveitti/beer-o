@@ -1,4 +1,4 @@
-package com.example.villi.beer_yo_ass_app;
+package com.example.villi.beer_yo_ass;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.villi.beer_yo_ass_app", appContext.getPackageName());
+        assertEquals("com.example.villi.beer_yo_ass", appContext.getPackageName());
     }
 }
