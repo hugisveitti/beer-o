@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button test_Button;
 
-    private MenuItem nav_search;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,32 +25,37 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
         test_Button = (Button) findViewById(R.id.test_button);
-        nav_search = (MenuItem) findViewById(R.id.nav_search);
 
         test_Button.setOnClickListener(new View.OnClickListener() {
              @Override
 
-//             nav_search.
              public void onClick(View view) {
                  Toast.makeText(MainActivity.this, "testing", Toast.LENGTH_SHORT).show();
              }
         });
+
+        Menu menu = bottomNavigation.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 
-                if (item.getItemId() == R.id.nav_search) {
-                    Intent myIntent = new Intent(MainActivity.this, SearchActivity.class);
-                    MainActivity.this.startActivity(myIntent);
-                    return true;
-                }
+                switch (item.getItemId()){
+                    case R.id.nav_home:
+                        break;
 
-                if (item.getItemId() == R.id.nav_my_page) {
-                    Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-                    MainActivity.this.startActivity(myIntent);
-                    return true;
+                    case R.id.nav_search:
+                        Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.nav_my_page:
+                        Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent2);
+                        break;
                 }
 
                 return false;

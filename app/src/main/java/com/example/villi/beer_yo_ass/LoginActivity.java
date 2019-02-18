@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -97,24 +98,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
-
         bottomNavigation = findViewById(R.id.bottomNavigation);
+
+        Menu menu = bottomNavigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                if (item.getItemId() == R.id.nav_home) {
-                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    LoginActivity.this.startActivity(myIntent);
-                    return true;
-                }
+                switch (item.getItemId()){
+                    case R.id.nav_home:
+                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent1);
+                        break;
 
-                if (item.getItemId() == R.id.nav_search) {
-                    Intent myIntent = new Intent(LoginActivity.this, SearchActivity.class);
-                    LoginActivity.this.startActivity(myIntent);
-                    return true;
+                    case R.id.nav_search:
+                        Intent intent2 = new Intent(LoginActivity.this, SearchActivity.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.nav_my_page:
+                        break;
                 }
 
                 return false;
