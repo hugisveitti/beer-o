@@ -17,4 +17,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings in layout list item.xml -->
+    <string name="beer_image">Beer image</string>
+
 </resources>

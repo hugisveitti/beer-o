@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,21 +21,34 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-
-    private static final String URL_DATA = "http://localhost:8080/beers";
+//
+//    private static final String URL_DATA = "http://localhost:8080/beers";
+    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
 
     private BottomNavigationView bottomNavigation;
     private Button button_get_data;
+
+    private static final String TAG = "SearchActivity";
+
+    // variables for the json data
+    private ArrayList<String> mbeer_image = new ArrayList<>();
+    private ArrayList<String> mbeer_name = new ArrayList<>();
+    private ArrayList<String> mbeer_volume = new ArrayList<>();
+    private ArrayList<String> mbeer_price = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +56,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        button_get_data = findViewById(R.id.button_get_data);
 
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -67,21 +81,11 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(intent2);
                         break;
                 }
-
                 return false;
-
-            }
-        });
-
-        button_get_data.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SearchActivity.this, "bitch ass", Toast.LENGTH_SHORT).show();
             }
         });
 
         loadRecyclerViewData();
-
 
     }
 
@@ -98,8 +102,22 @@ public class SearchActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         try {
                             System.out.println("INNÍ RESPONSE");
-                            JSONObject jsonObject = new JSONObject(response);
-                            System.out.println(jsonObject.toString());
+                            JSONArray jsonArray = new JSONArray(response);
+                            System.out.println(jsonArray.get(1));
+                            System.out.println("Lengd: " + jsonArray.length());
+                            System.out.println(jsonArray.getJSONObject(1).get("beerId"));
+                            System.out.println(jsonArray.getJSONObject(1).get("name"));
+                            System.out.println("Náði að sækja");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                mbeer_image.add("ekkert");
+                                mbeer_name.add(jsonArray.getJSONObject(i).get("name") + "");
+                                mbeer_volume.add("Magn " + jsonArray.getJSONObject(i).get("volume") + " ml.");
+                                mbeer_price.add(jsonArray.getJSONObject(i).get("price") + " kr.");
+                            }
+
+                            initRecyclerView();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -120,5 +138,11 @@ public class SearchActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void initRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_image, mbeer_name, mbeer_volume, mbeer_price);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
 }
