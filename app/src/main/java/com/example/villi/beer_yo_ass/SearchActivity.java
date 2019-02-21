@@ -2,6 +2,7 @@ package com.example.villi.beer_yo_ass;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -109,8 +111,11 @@ public class SearchActivity extends AppCompatActivity {
                             System.out.println(jsonArray.getJSONObject(1).get("name"));
                             System.out.println("Náði að sækja");
 
+                            String image_url = "https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/03603_r.jpg";
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                mbeer_image.add("ekkert");
+//                                Drawable img = LoadImageFromWebOperations(image_url);
+
+                                mbeer_image.add(jsonArray.getJSONObject(i).get("beerId") + "");
                                 mbeer_name.add(jsonArray.getJSONObject(i).get("name") + "");
                                 mbeer_volume.add("Magn " + jsonArray.getJSONObject(i).get("volume") + " ml.");
                                 mbeer_price.add(jsonArray.getJSONObject(i).get("price") + " kr.");
@@ -143,6 +148,17 @@ public class SearchActivity extends AppCompatActivity {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_image, mbeer_name, mbeer_volume, mbeer_price);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, url);
+
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

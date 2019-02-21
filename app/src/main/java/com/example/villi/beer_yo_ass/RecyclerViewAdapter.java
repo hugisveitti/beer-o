@@ -1,6 +1,7 @@
 package com.example.villi.beer_yo_ass;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -44,7 +47,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
 //        Log.d(TAG, "onBindViewHolder: called.");
 
-        //holder.beer_image // vantar að setja myndina
+
+        if (mbeer_image.get(position).length() == 4) {
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_image.get(position)+"_r.jpg").into(holder.beer_image);
+        } else {
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_image.get(position)+"_r.jpg").into(holder.beer_image);
+        }
 
         holder.beer_name.setText(mbeer_name.get(position));
         holder.beer_volume.setText(mbeer_volume.get(position));
@@ -53,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.list_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + mbeer_name.get(position));
+                Log.d(TAG, "onClick: clicked on: " + mbeer_image.get(position));
 
                 Toast.makeText(mContext, mbeer_name.get(position), Toast.LENGTH_SHORT).show();
             }
