@@ -20,15 +20,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> mbeer_image = new ArrayList<>();
+    private ArrayList<String> mbeer_id = new ArrayList<>();
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
 
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> mbeer_image, ArrayList<String> mbeer_name, ArrayList<String> mbeer_volume, ArrayList<String> mbeer_price) {
-        this.mbeer_image = mbeer_image;
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> mbeer_id, ArrayList<String> mbeer_name, ArrayList<String> mbeer_volume, ArrayList<String> mbeer_price) {
+        this.mbeer_id = mbeer_id;
         this.mbeer_name = mbeer_name;
         this.mbeer_volume = mbeer_volume;
         this.mbeer_price = mbeer_price;
@@ -48,10 +48,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //        Log.d(TAG, "onBindViewHolder: called.");
 
 
-        if (mbeer_image.get(position).length() == 4) {
-            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_image.get(position)+"_r.jpg").into(holder.beer_image);
+        if (mbeer_id.get(position).length() == 4) {
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
         } else {
-            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_image.get(position)+"_r.jpg").into(holder.beer_image);
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
         }
 
         holder.beer_name.setText(mbeer_name.get(position));
@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.list_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + mbeer_image.get(position));
+                Log.d(TAG, "onClick: clicked on: " + mbeer_id.get(position));
 
                 Toast.makeText(mContext, mbeer_name.get(position), Toast.LENGTH_SHORT).show();
             }

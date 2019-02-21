@@ -36,17 +36,16 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-//
+
 //    private static final String URL_DATA = "http://localhost:8080/beers";
     private static final String URL_DATA = "http://10.0.2.2:8080/beers";
 
     private BottomNavigationView bottomNavigation;
-    private Button button_get_data;
 
     private static final String TAG = "SearchActivity";
 
     // variables for the json data
-    private ArrayList<String> mbeer_image = new ArrayList<>();
+    private ArrayList<String> mbeer_id = new ArrayList<>();
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
@@ -111,11 +110,9 @@ public class SearchActivity extends AppCompatActivity {
                             System.out.println(jsonArray.getJSONObject(1).get("name"));
                             System.out.println("Náði að sækja");
 
-                            String image_url = "https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/03603_r.jpg";
                             for (int i = 0; i < jsonArray.length(); i++) {
-//                                Drawable img = LoadImageFromWebOperations(image_url);
 
-                                mbeer_image.add(jsonArray.getJSONObject(i).get("beerId") + "");
+                                mbeer_id.add(jsonArray.getJSONObject(i).get("beerId") + "");
                                 mbeer_name.add(jsonArray.getJSONObject(i).get("name") + "");
                                 mbeer_volume.add("Magn " + jsonArray.getJSONObject(i).get("volume") + " ml.");
                                 mbeer_price.add(jsonArray.getJSONObject(i).get("price") + " kr.");
@@ -145,20 +142,9 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_image, mbeer_name, mbeer_volume, mbeer_price);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    public Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, url);
-
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
     }
 
 }
