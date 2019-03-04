@@ -37,11 +37,7 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
-//    private static final String URL_DATA = "http://localhost:8080/beers";
-    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
-
     private BottomNavigationView bottomNavigation;
-
     private static final String TAG = "SearchActivity";
 
     // variables for the json data
@@ -50,6 +46,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
 
+    private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +59,8 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
+        makeBeerList();
+        initRecyclerView();
 
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -87,65 +86,44 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        loadRecyclerViewData();
 
     }
 
-    private void loadRecyclerViewData() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.show();
+    private void makeBeerList() {
+        System.out.println("Search that shit cuz");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URL_DATA,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            System.out.println("INNÍ RESPONSE");
-                            JSONArray jsonArray = new JSONArray(response);
-                            System.out.println(jsonArray.get(1));
-                            System.out.println("Lengd: " + jsonArray.length());
-                            System.out.println(jsonArray.getJSONObject(1).get("beerId"));
-                            System.out.println(jsonArray.getJSONObject(1).get("name"));
-                            System.out.println("Náði að sækja");
+        try {
+            ArrayList<JSONObject> beer_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEER_DATA");
+            for (int i = 0; i < beer_list.size(); i++) {
+                mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
+            }
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                                mbeer_id.add(jsonArray.getJSONObject(i).get("beerId") + "");
-                                mbeer_name.add(jsonArray.getJSONObject(i).get("name") + "");
-                                mbeer_volume.add("Magn " + jsonArray.getJSONObject(i).get("volume") + " ml.");
-                                mbeer_price.add(jsonArray.getJSONObject(i).get("price") + " kr.");
-                            }
-
-                            initRecyclerView();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        System.out.println("Error response");
-                        Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 
     private void initRecyclerView() {
+
+        try {
+            for (int i = 0; i < mbeer_data.size(); i++) {
+
+                mbeer_id.add(mbeer_data.get(i).get("beerId") + "");
+                mbeer_name.add(mbeer_data.get(i).get("name") + "");
+                mbeer_volume.add("Magn " + mbeer_data.get(i).get("volume") + " ml.");
+                mbeer_price.add(mbeer_data.get(i).get("price") + " kr.");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
 }

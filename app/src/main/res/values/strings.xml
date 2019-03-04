@@ -23,7 +23,7 @@
     <!-- Strings in layout list item.xml -->
     <string name="beer_image">Beer image</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- String in login and signup fragments -->
     <string name="login_fragment">Hello Login fragment</string>
     <string name="signup_fragment">Hello Sign up fragment</string>
 
