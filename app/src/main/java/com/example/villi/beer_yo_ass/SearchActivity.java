@@ -71,6 +71,7 @@ public class SearchActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_home:
                         Intent intent1 = new Intent(SearchActivity.this, MainActivity.class);
+                        intent1.putExtra("EXTRA_VALUE", "bitch ass");
                         startActivity(intent1);
                         break;
 

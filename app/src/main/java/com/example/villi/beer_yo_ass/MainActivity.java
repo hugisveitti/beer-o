@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
 
     private Button test_Button;
+    private String test_string;
 
 
     @Override
@@ -26,11 +27,17 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
         test_Button = (Button) findViewById(R.id.test_button);
 
+        if (getIntent().getStringExtra("EXTRA_VALUE") == null){
+            test_string = "Virkar ekki";
+        } else {
+            test_string = getIntent().getStringExtra("EXTRA_VALUE");
+        }
+
         test_Button.setOnClickListener(new View.OnClickListener() {
              @Override
 
              public void onClick(View view) {
-                 Toast.makeText(MainActivity.this, "testing", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this, test_string, Toast.LENGTH_SHORT).show();
              }
         });
 

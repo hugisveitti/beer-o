@@ -75,11 +75,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView beer_image;
-        TextView beer_name;
-        TextView beer_volume;
-        TextView beer_price;
-        RelativeLayout list_item_layout;
+        private ImageView beer_image;
+        private TextView beer_name;
+        private TextView beer_volume;
+        private TextView beer_price;
+        private RelativeLayout list_item_layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
