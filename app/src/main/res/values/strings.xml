@@ -24,8 +24,8 @@
     <string name="beer_image">Beer image</string>
 
     <!-- String in login and signup fragments -->
-    <string name="login_fragment">Hello Login fragment</string>
-    <string name="signup_fragment">Hello Sign up fragment</string>
+    <string name="login_fragment">Don\'t have an account? Sign up</string>
+    <string name="signup_fragment">Already have an account? Login</string>
 
 
 </resources>
