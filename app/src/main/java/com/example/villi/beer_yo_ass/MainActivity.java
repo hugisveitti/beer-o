@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //    private static final String URL_DATA = "http://localhost:8080/beers";
-    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
+    private static final String URL_DATA = "https://beer-yo-ass-server.herokuapp.com/beers";
 
     private BottomNavigationView bottomNavigation;
     private Button test_Button;

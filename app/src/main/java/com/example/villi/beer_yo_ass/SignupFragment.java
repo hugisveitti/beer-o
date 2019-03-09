@@ -89,7 +89,7 @@ public class SignupFragment extends Fragment {
     }
 
     private void attemptSignup(final String username, String password) {
-        String URL_DATA = "http://10.0.2.2:8080/signup/"+username+"/"+password;
+        String URL_DATA = "https://beer-yo-ass-server.herokuapp.com/signup/"+username+"/"+password;
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading data...");
