@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private LoginFragment loginFragment;
+    public static String user = null;
 
 
     @Override
@@ -27,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
         loginFragment = new LoginFragment();
+
+        user = "tómu tjóni";
 
 
         Menu menu = bottomNavigation.getMenu();
