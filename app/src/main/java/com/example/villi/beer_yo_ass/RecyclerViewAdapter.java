@@ -70,8 +70,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Toast.makeText(mContext, mbeer_name.get(position), Toast.LENGTH_SHORT).show();
 
                 Intent intent1 = new Intent(mContext, BeerActivity.class);
-                intent1.putExtra("BEER_ID", "01009");
-                //intent1.putExtra("BEER_ID", beerId);
+                //intent1.putExtra("BEER_ID", "01009");
+                intent1.putExtra("BEER_ID", beerId);
                 mContext.startActivities(new Intent[]{intent1});
 
             }
