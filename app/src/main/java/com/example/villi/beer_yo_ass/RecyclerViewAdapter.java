@@ -1,8 +1,11 @@
 package com.example.villi.beer_yo_ass;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
-
     private Context mContext;
 
     public RecyclerViewAdapter(Context mContext, ArrayList<String> mbeer_id, ArrayList<String> mbeer_name, ArrayList<String> mbeer_volume, ArrayList<String> mbeer_price) {
@@ -47,10 +49,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
 //        Log.d(TAG, "onBindViewHolder: called.");
 
-
+        final String beerId;
         if (mbeer_id.get(position).length() == 4) {
+            beerId = "0"+mbeer_id.get(position);
             Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
         } else {
+            beerId = "" + mbeer_id.get(position);
             Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
         }
 
@@ -64,6 +68,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Log.d(TAG, "onClick: clicked on: " + mbeer_id.get(position));
 
                 Toast.makeText(mContext, mbeer_name.get(position), Toast.LENGTH_SHORT).show();
+
+                Intent intent1 = new Intent(mContext, BeerActivity.class);
+                intent1.putExtra("BEER_ID", "01009");
+                //intent1.putExtra("BEER_ID", beerId);
+                mContext.startActivities(new Intent[]{intent1});
+
             }
         });
     }

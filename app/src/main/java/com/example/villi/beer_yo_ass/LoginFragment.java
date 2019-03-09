@@ -1,8 +1,5 @@
 package com.example.villi.beer_yo_ass;
 
-
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
