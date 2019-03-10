@@ -187,7 +187,6 @@ public class SearchActivity extends AppCompatActivity {
         try {
             for (int i = 0; i < mbeer_data.size(); i++) {
                 if(checkConstraints(sorted_data.get(i))){
-                    System.out.println(sorted_data.get(i).get("name") + "");
                     mbeer_id.add(sorted_data.get(i).get("beerId") + "");
                     mbeer_name.add(sorted_data.get(i).get("name") + "");
                     mbeer_volume.add("Magn " + sorted_data.get(i).get("volume") + " ml.");

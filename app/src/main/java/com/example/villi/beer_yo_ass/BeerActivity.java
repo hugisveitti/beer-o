@@ -39,6 +39,7 @@ public class BeerActivity extends AppCompatActivity {
     private TextView viewStars;
     private ImageView viewImage;
 
+    private static final String HOST_URL_DATA = "http://10.0.2.2:8080/beers";
     private static String URL_DATA = "http://10.0.2.2:8080/beers";
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private String name;
@@ -64,11 +65,11 @@ public class BeerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer);
 
-
+        System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYY");
         Bundle p = getIntent().getExtras();
         beerId = p.getString("BEER_ID");
 
-        URL_DATA = URL_DATA + "/" + beerId;
+        URL_DATA = HOST_URL_DATA + "/" + beerId;
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
