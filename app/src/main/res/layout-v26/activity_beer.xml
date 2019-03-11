@@ -114,7 +114,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="@string/comment_here"
-        android:importantForAutofill="no" tools:targetApi="o"/>
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/comment_button"

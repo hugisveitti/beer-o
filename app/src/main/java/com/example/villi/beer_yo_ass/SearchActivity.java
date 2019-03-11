@@ -79,12 +79,13 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
+        //load data into mbeer_data and process it
         try {
             makeBeerList();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        //make list of beers to display
         initRecyclerView();
 
 
@@ -114,6 +115,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    //Make request on server and put response of all beers in mbeer_data
     private void loadBeerData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading data...");
@@ -158,7 +160,8 @@ public class SearchActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-
+    //Annoyingly complicated function processing data, some JSON gymnastics to be able to sort
+    //In the end data gets loaded and sorted into sorted_data
     private void makeBeerList() throws JSONException {
         System.out.println("Search that shit cuz");
 
@@ -193,14 +196,13 @@ public class SearchActivity extends AppCompatActivity {
         } catch (JSONException e) {
             System.out.print(e);
         }
-        initRecyclerView();
     }
 
+    //Load every beer in mbeerdata in RecycleView list of beers
     private void initRecyclerView() {
 
         try {
-            for (int i = 0; i < mbeer_data.size(); i++) {
-                //System.out.println(sorted_data.get(i).get("name") + "");
+            for (int i = 0; i < sorted_data.size(); i++) {
                 mbeer_id.add(sorted_data.get(i).get("beerId") + "");
                 mbeer_name.add(sorted_data.get(i).get("name") + "");
                 mbeer_volume.add("Magn " + sorted_data.get(i).get("volume") + " ml.");
@@ -217,6 +219,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    //Filter out beers if they dont meet constraints in search filter
     private  boolean checkConstraints(JSONObject obj) throws JSONException {
         Boolean bool = true;
         if(underPrice > 0 && underPrice > overPrice){
@@ -241,10 +244,11 @@ public class SearchActivity extends AppCompatActivity {
         return bool;
     }
 
+    //Same as initRecyclerView but filter the beers
     private void searchRecyclerView() {
 
         try {
-            for (int i = 0; i < mbeer_data.size(); i++) {
+            for (int i = 0; i < sorted_data.size(); i++) {
                 if(checkConstraints(sorted_data.get(i))){
                     mbeer_id.add(sorted_data.get(i).get("beerId") + "");
                     mbeer_name.add(sorted_data.get(i).get("name") + "");
@@ -263,7 +267,8 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    //Take in JSONArray and sort it with regards to a KEY, here the variable sortby
+    //Sortby is changed with radio buttons
     private JSONArray sortList(JSONArray jsonArr) throws JSONException {
 
         JSONArray sortedJsonArray = new JSONArray();
@@ -307,6 +312,7 @@ public class SearchActivity extends AppCompatActivity {
         return sortedJsonArray;
     }
 
+    //Radio buttons change sortby variable which is referred to when sorting
     public void onRadioButtonClicked(View view) throws JSONException {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -350,6 +356,7 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
+    //Take all filter inputs and process to get results
     public void onSearchButtonClicked(View view) throws JSONException {
         search_string = (EditText) findViewById(R.id.search_name);
         over_price = (EditText) findViewById(R.id.price_over_input);

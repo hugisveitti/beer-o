@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class BeerActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
 
+    //Views
     private TextView viewName;
     private TextView viewVolume;
     private TextView viewAlcohol;
@@ -45,10 +46,12 @@ public class BeerActivity extends AppCompatActivity {
     private EditText commentText;
     private Button commentButton;
 
+    //URL and Request parameters
     private static final String HOST_URL_DATA = "http://10.0.2.2:8080/beers";
     private static String URL_DATA = "http://10.0.2.2:8080/beers";
     private static String COMMENT_URL_DATA = "http://10.0.2.2:8080/comment/";
-    private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
+
+    //beerdata variables
     private String name;
     private String stars;
     private String alcohol;
@@ -59,12 +62,12 @@ public class BeerActivity extends AppCompatActivity {
     private String beerId;
 
     // variables for the json data
+    private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private ArrayList<String> commenter_name = new ArrayList<>();
     private ArrayList<String> comment = new ArrayList<>();
     private ArrayList<String> commenter_id = new ArrayList<>();
     private ArrayList<String> comment_time = new ArrayList<>();
     private ArrayList<String> comment_title = new ArrayList<>();
-
     private ArrayList<JSONObject> comment_data = new ArrayList<>();
 
     @Override
@@ -72,10 +75,10 @@ public class BeerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer);
 
-        System.out.println("LOGINUSTER: " + LoginActivity.user);
         Bundle p = getIntent().getExtras();
         beerId = p.getString("BEER_ID");
 
+        //We send a get Request on this beerId
         URL_DATA = HOST_URL_DATA + "/" + beerId;
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
@@ -106,22 +109,19 @@ public class BeerActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        //Load data and process to variables
         loadBeerData();
+
+        //Make it so you are only able to comment when logged in
         commentText = (EditText) findViewById(R.id.comment_input);
         commentButton = (Button) findViewById(R.id.comment_button);
-
         if(LoginActivity.user == null){
             commentText.setVisibility(View.GONE);
             commentButton.setVisibility(View.GONE);
-            /*
-            RelativeLayout.LayoutParams lp =
-                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 350);
-            RecyclerView recyclerView = findViewById(R.id.recycler_view);
-            recyclerView.setLayoutParams(lp);*/
-
         }
         else{
+            //Handle if someone presses comment button
+            //first check if comment is not empty then post
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -129,9 +129,7 @@ public class BeerActivity extends AppCompatActivity {
                     if(!isEmpty(commentText)){
                         String comment = commentText.getText().toString().trim();
                         postComment(comment);
-
                     }
-
                 }
             });
         }
@@ -145,6 +143,7 @@ public class BeerActivity extends AppCompatActivity {
         return true;
     }
 
+    //Simple Post request with parameters in url
     private void postComment(String comment) {
         String url = COMMENT_URL_DATA +
                      LoginActivity.user + "/" +
@@ -179,6 +178,7 @@ public class BeerActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    //Make request and then process data
     private void loadBeerData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading data...");
@@ -252,6 +252,7 @@ public class BeerActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    //Load comments in a recycle view
     private void initRecyclerView(ArrayList<JSONObject> comment_data) {
 
         try {

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">beer-yo-ass</string>
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
@@ -27,8 +27,33 @@
     <string name="login_fragment">Don\'t have an account? Sign up</string>
     <string name="signup_fragment">Already have an account? Login</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Strings related to beerPage -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="volume">Volume</string>
+    <string name="stars">Stars</string>
+    <string name="price">Price</string>
+    <string name="alcohol">Alcohol</string>
+    <string name="taste">Taste</string>
+    <string name="comment">Comment</string>
+    <string name="comment_here">Comment here</string>
+    <!-- Strings related to searchPage -->
+    <string name="alphabetical">Alphabetical</string>
+    <string name="by_price">By price</string>
+    <string name="by_alcohol">By alcohol</string>
+    <string name="Search_instructions">How do you want to filter results?</string>
+    <string name="price_under">Price under:</string>
+    <string name="price_over">Price over:</string>
+    <string name="search">Search</string>
+    <string name="name" tools:ignore="ExtraTranslation">Name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="picture_of_beer">Picture of Beer</string>
+    <string name="beer_yo_ass">Beer-Yo-Ass</string>
+    <string name="logo">Logo</string>
+    <string name="button">Button</string>
+
 
 
 </resources>

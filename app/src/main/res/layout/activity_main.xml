@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="140dp"
         android:layout_marginTop="426dp"
-        android:text="Beer-Yo-Ass"
+        android:text="@string/beer_yo_ass"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -37,7 +37,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="154dp"
         android:layout_marginTop="334dp"
-        android:text="Button" />
+        android:text="@string/button" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -47,5 +47,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="98dp"
+        android:contentDescription="@string/logo"
         app:srcCompat="@drawable/logotemo" />
 </RelativeLayout>

@@ -13,7 +13,7 @@
         android:layout_marginTop="158dp"
         android:ems="10"
         android:inputType="textPassword"
-        tools:text="@string/textview_password"
+        tools:hint="@string/textview_password"
         />
 
 
@@ -27,7 +27,7 @@
         android:layout_marginHorizontal="80dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:text="@string/textview_username"
+        tools:hint="@string/textview_username"
         />
 
     <Button

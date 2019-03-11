@@ -20,21 +20,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="Alphabetical" />
+            android:text="@string/alphabetical" />
 
         <RadioButton
             android:id="@+id/by_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="By price" />
+            android:text="@string/by_price" />
 
         <RadioButton
             android:id="@+id/by_alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
-            android:text="By alcohol" />
+            android:text="@string/by_alcohol" />
     </RadioGroup>
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:text="How do you want to filter results?" />
+        android:text="@string/Search_instructions" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -75,7 +75,8 @@
         android:layout_marginEnd="14dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="@string/name"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/price_tag1"
@@ -85,7 +86,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="127dp"
         android:layout_marginTop="80dp"
-        android:text="Price under:" />
+        android:text="@string/price_under" />
 
     <TextView
         android:id="@+id/price_tag2"
@@ -95,7 +96,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="126dp"
         android:layout_marginTop="31dp"
-        android:text="Price over:" />
+        android:text="@string/price_over" />
 
     <EditText
         android:id="@+id/price_under_input"
@@ -106,7 +107,8 @@
         android:layout_marginTop="63dp"
         android:layout_marginEnd="109dp"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/price_over_input"
@@ -117,7 +119,8 @@
         android:layout_marginTop="113dp"
         android:layout_marginEnd="109dp"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/search_button"
@@ -128,7 +131,7 @@
         android:layout_marginTop="111dp"
         android:layout_marginEnd="12dp"
         android:onClick="onSearchButtonClicked"
-        android:text="Search"
+        android:text="@string/search"
         android:textSize="10sp" />
 
 </RelativeLayout>
