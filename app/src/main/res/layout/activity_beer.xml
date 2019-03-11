@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="224dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="379dp"
         android:layout_marginBottom="56dp" />
@@ -31,8 +30,8 @@
         android:layout_height="170dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
         app:srcCompat="@drawable/logotemo" />
 
     <TextView
@@ -42,18 +41,18 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="12dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="Name" />
 
     <TextView
         android:id="@+id/beerVolume"
-        android:layout_width="87dp"
+        android:layout_width="96dp"
         android:layout_height="34dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="265dp"
-        android:layout_marginEnd="47dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="21dp"
         android:layout_toStartOf="@+id/beerPrice"
         android:text="Volume" />
 
@@ -63,44 +62,68 @@
         android:layout_height="39dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="138dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="15dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="Stars" />
 
     <TextView
         android:id="@+id/beerAlcohol"
-        android:layout_width="82dp"
-        android:layout_height="33dp"
+        android:layout_width="93dp"
+        android:layout_height="34dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="265dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="199dp"
+        android:layout_marginEnd="19dp"
         android:layout_toStartOf="@+id/beerVolume"
         android:text="Alcohol" />
 
     <TextView
         android:id="@+id/beerPrice"
-        android:layout_width="83dp"
-        android:layout_height="38dp"
+        android:layout_width="85dp"
+        android:layout_height="31dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="262dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="199dp"
+        android:layout_marginEnd="83dp"
         android:text="Price" />
 
     <TextView
         android:id="@+id/beerTaste"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="184dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="236dp"
+        android:layout_marginStart="214dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="470dp"
         android:text="Taste" />
+
+    <EditText
+        android:id="@+id/comment_input"
+        android:layout_width="333dp"
+        android:layout_height="117dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="246dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint=""
+        />
+
+    <Button
+        android:id="@+id/comment_button"
+        android:layout_width="46dp"
+        android:layout_height="111dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="245dp"
+        android:layout_marginEnd="8dp"
+        android:text="Comment"
+        android:textSize="10sp" />
 
 </RelativeLayout>

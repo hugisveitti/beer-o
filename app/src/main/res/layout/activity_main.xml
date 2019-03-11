@@ -22,9 +22,12 @@
         android:layout_height="34dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="152dp"
-        android:text="Hello World!" />
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="426dp"
+        android:text="Beer-Yo-Ass"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/test_button"
@@ -32,7 +35,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="218dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="334dp"
         android:text="Button" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="226dp"
+        android:layout_height="215dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="98dp"
+        app:srcCompat="@drawable/logotemo" />
 </RelativeLayout>

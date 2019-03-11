@@ -39,11 +39,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SearchActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private static final String TAG = "SearchActivity";
+    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
 
     private EditText search_string;
     private EditText over_price;
@@ -77,7 +79,12 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
-        makeBeerList();
+        try {
+            makeBeerList();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         initRecyclerView();
 
 
@@ -107,13 +114,65 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    private void makeBeerList() {
+    private void loadBeerData() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URL_DATA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            System.out.println(jsonArray.get(1));
+                            System.out.println("Lengd: " + jsonArray.length());
+                            System.out.println(jsonArray.getJSONObject(1).get("beerId"));
+                            System.out.println("Náði að sækja");
+
+                            // add the beers to ArrayList of beer
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                mbeer_data.add(jsonArray.getJSONObject(i));
+                            }
+
+                            System.out.println(mbeer_data.get(0));
+                            System.out.println(mbeer_data.size());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(SearchActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void makeBeerList() throws JSONException {
         System.out.println("Search that shit cuz");
 
         try {
-            ArrayList<JSONObject> beer_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEER_DATA");
-            for (int i = 0; i < beer_list.size(); i++) {
-                mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
+            if(mbeer_data.size() == 0){
+                ArrayList<JSONObject> beer_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEER_DATA");
+                if(beer_list == null){
+                    loadBeerData();
+                }
+                else {
+                    for (int i = 0; i < beer_list.size(); i++) {
+                        mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
+                    }
+                }
             }
 
             jsonArray = new JSONArray();
@@ -132,9 +191,9 @@ public class SearchActivity extends AppCompatActivity {
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            System.out.print(e);
         }
-
+        initRecyclerView();
     }
 
     private void initRecyclerView() {
@@ -248,7 +307,7 @@ public class SearchActivity extends AppCompatActivity {
         return sortedJsonArray;
     }
 
-    public void onRadioButtonClicked(View view) {
+    public void onRadioButtonClicked(View view) throws JSONException {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -257,7 +316,6 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.by_alphabetical:
                 if (checked) {
                     sortby = "name";
-                    Toast.makeText(this, view.getId()+"", Toast.LENGTH_SHORT).show();
                     reloadView();
                     break;
                 }
@@ -276,7 +334,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void reloadView(){
+    private void reloadView() throws JSONException {
         mbeer_id = new ArrayList<>();
         mbeer_name = new ArrayList<>();
         mbeer_volume = new ArrayList<>();
@@ -292,7 +350,7 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onSearchButtonClicked(View view) {
+    public void onSearchButtonClicked(View view) throws JSONException {
         search_string = (EditText) findViewById(R.id.search_name);
         over_price = (EditText) findViewById(R.id.price_over_input);
         under_price = (EditText) findViewById(R.id.price_under_input);

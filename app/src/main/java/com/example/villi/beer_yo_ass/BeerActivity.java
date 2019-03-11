@@ -10,7 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +42,12 @@ public class BeerActivity extends AppCompatActivity {
     private TextView viewTaste;
     private TextView viewStars;
     private ImageView viewImage;
+    private EditText commentText;
+    private Button commentButton;
 
     private static final String HOST_URL_DATA = "http://10.0.2.2:8080/beers";
     private static String URL_DATA = "http://10.0.2.2:8080/beers";
+    private static String COMMENT_URL_DATA = "http://10.0.2.2:8080/comment/";
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private String name;
     private String stars;
@@ -65,7 +72,7 @@ public class BeerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer);
 
-        System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYY");
+        System.out.println("LOGINUSTER: " + LoginActivity.user);
         Bundle p = getIntent().getExtras();
         beerId = p.getString("BEER_ID");
 
@@ -101,6 +108,75 @@ public class BeerActivity extends AppCompatActivity {
         });
 
         loadBeerData();
+        commentText = (EditText) findViewById(R.id.comment_input);
+        commentButton = (Button) findViewById(R.id.comment_button);
+
+        if(LoginActivity.user == null){
+            commentText.setVisibility(View.GONE);
+            commentButton.setVisibility(View.GONE);
+            /*
+            RelativeLayout.LayoutParams lp =
+                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 350);
+            RecyclerView recyclerView = findViewById(R.id.recycler_view);
+            recyclerView.setLayoutParams(lp);*/
+
+        }
+        else{
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(BeerActivity.this, "TETETE", Toast.LENGTH_SHORT).show();
+                    if(!isEmpty(commentText)){
+                        String comment = commentText.getText().toString().trim();
+                        postComment(comment);
+
+                    }
+
+                }
+            });
+        }
+
+    }
+
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+
+        return true;
+    }
+
+    private void postComment(String comment) {
+        String url = COMMENT_URL_DATA +
+                     LoginActivity.user + "/" +
+                     beerId + "/" +
+                     LoginActivity.user + "/" +
+                     comment + "/" +
+                     -1;
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+
+                        finish();
+                        startActivity(getIntent());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(BeerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void loadBeerData() {

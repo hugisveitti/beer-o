@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadBeerData();
+        if(mbeer_data.size() == 0){
+            loadBeerData();
+        }
+
 
     }
 
