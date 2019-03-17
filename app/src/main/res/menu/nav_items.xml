@@ -12,6 +12,6 @@
         android:title="@string/nav_search" />
     <item
         android:id="@+id/nav_my_page"
-        android:icon="@drawable/baseline_accessible_black_18dp"
+        android:icon="@drawable/baseline_account_circle_black_18dp"
         android:title="@string/nav_my_page" />
 </menu>

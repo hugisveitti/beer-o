@@ -51,9 +51,7 @@ public class SignupFragment extends Fragment {
         got_account = view.findViewById(R.id.got_account);
 
 
-
-
-
+        // Switch to the login fragment
         got_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,15 +68,12 @@ public class SignupFragment extends Fragment {
             }
         });
 
-
+        // Try to signup if user clicks on Signup button
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = text_username.getText().toString();
                 String password = text_password.getText().toString();
-
-                System.out.println("Username: " + username);
-                System.out.println("Password: " + password);
 
                 attemptSignup(username,password);
             }
@@ -88,6 +83,9 @@ public class SignupFragment extends Fragment {
         return view;
     }
 
+    /* attemptSignup sends a GET request on a URL and if it returns false
+     * the username is taken otherwise it returns true and user is logged in
+     */
     private void attemptSignup(final String username, String password) {
         String URL_DATA = "http://10.0.2.2:8080/signup/"+username+"/"+password;
 
@@ -109,8 +107,8 @@ public class SignupFragment extends Fragment {
                         if (response.equals("false")) {
                             Toast.makeText(getActivity(), "Notandanafn ekki laust", Toast.LENGTH_SHORT).show();
                         } else {
+                            LoginActivity.user = username;
                             Toast.makeText(getActivity(), "Velkominn " + username, Toast.LENGTH_SHORT).show();
-
                         }
 
                     }
@@ -125,6 +123,7 @@ public class SignupFragment extends Fragment {
                     }
                 });
 
+        // Use Volley to send request on database
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,16 +27,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+// This is the activity that opens when you open the app
 public class MainActivity extends AppCompatActivity {
 
-
+    // To be able to fetch the data you need to run the beer-yo-ass backend
+    // TODO: Set the backend up on Heroku
     //    private static final String URL_DATA = "http://localhost:8080/beers";
     private static final String URL_DATA = "http://10.0.2.2:8080/beers";
 
     private BottomNavigationView bottomNavigation;
-    private Button test_Button;
-    private String test_string;
-
+    private TextView mUser_textview;
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
 
 
@@ -45,25 +46,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        test_Button = (Button) findViewById(R.id.test_button);
-
-        if (getIntent().getStringExtra("EXTRA_VALUE") == null){
-            test_string = "Virkar ekki";
-        } else {
-            test_string = getIntent().getStringExtra("EXTRA_VALUE");
-        }
-
-        test_Button.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Toast.makeText(MainActivity.this, test_string, Toast.LENGTH_SHORT).show();
-             }
-        });
+        mUser_textview = findViewById(R.id.user_textview);
 
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
+
+        if (LoginActivity.user == null) {
+            mUser_textview.setText("Notandi ekki skráður inn");
+        } else {
+            mUser_textview.setText("Velkominn " + LoginActivity.user);
+        }
+
+
+        // Navigation bar to change activities
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -92,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return false;
-
             }
         });
 
+        // The data is only loaded if the data array is empty
         if(mbeer_data.size() == 0){
             loadBeerData();
         }
@@ -103,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // This function is called to load the data
     private void loadBeerData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading data...");
@@ -117,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             System.out.println(jsonArray.get(1));
-                            System.out.println("Lengd: " + jsonArray.length());
                             System.out.println(jsonArray.getJSONObject(1).get("beerId"));
                             System.out.println("Náði að sækja");
 
@@ -127,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             System.out.println(mbeer_data.get(0));
-                            System.out.println(mbeer_data.size());
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -145,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        // The Volley package is used to make a request on the database
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }

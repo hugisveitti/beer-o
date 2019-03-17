@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
         button_login = view.findViewById(R.id.button_login);
         no_account = view.findViewById(R.id.no_account);
 
-
+        // Switch to the signup fragment
         no_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,15 +68,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
+        // Try to login if user clicks on login button
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = text_username.getText().toString();
                 String password = text_password.getText().toString();
-
-                System.out.println("Username: " + username);
-                System.out.println("Password: " + password);
 
                 attemptLogin(username,password);
             }
@@ -88,6 +85,9 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+    /* attemptLogin sends a GET request on a URL and returns true if
+     * user was able to login otherwise it sends false
+     */
     private void attemptLogin(final String username, String password) {
         String URL_DATA = "http://10.0.2.2:8080/login/"+username+"/"+password;
 
@@ -95,7 +95,6 @@ public class LoginFragment extends Fragment {
         progressDialog.setMessage("Loading data...");
         progressDialog.show();
 
-        System.out.println(URL_DATA);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL_DATA,
                 new Response.Listener<String>() {
@@ -126,6 +125,7 @@ public class LoginFragment extends Fragment {
                     }
                 });
 
+        // Use Volley to send request on database
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }

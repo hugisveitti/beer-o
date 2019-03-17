@@ -29,15 +29,15 @@ public class LoginActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
         loginFragment = new LoginFragment();
 
-        user = "tómu tjóni";
-
 
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
 
+        // set the loginfragment when loginActivity is loaded and no user signed in
         setFragment(loginFragment);
 
+        // TODO: if user is logged in, load userpage fragment
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    // Function to load a new fragment
     private void setFragment(LoginFragment fragment) {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()

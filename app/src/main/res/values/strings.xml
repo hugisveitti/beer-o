@@ -1,8 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">beer-yo-ass</string>
+
+    <!-- Strings related to navigation bar -->
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
-    <string name="nav_my_page">My page</string>
+    <string name="nav_my_page">Login</string>
+
+
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
