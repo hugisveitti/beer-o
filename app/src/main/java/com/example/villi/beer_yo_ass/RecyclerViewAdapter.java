@@ -1,3 +1,11 @@
+/**
+ * The RecyclerViewAdapter classes are used to display a list of some items.
+ * This class is mainly used to dislay beers in the search page, later it might
+ * be used to display list of beers on some other page.
+ * The RecyclerViewAdapter takes in beer data and sets it up in a list like shown
+ * in its corresponding layout.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.content.Context;

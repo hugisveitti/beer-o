@@ -1,3 +1,10 @@
+/**
+ * The BeerActivity displays each individual beer. It allows us to
+ * comment and rate(soon) the beer by making requests to the server.
+ * The beerpage will eventually make it possible to add beers to
+ * a beerlis.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.app.ProgressDialog;
@@ -36,15 +43,15 @@ public class BeerActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
 
     //Views
-    private TextView viewName;
-    private TextView viewVolume;
-    private TextView viewAlcohol;
-    private TextView viewPrice;
-    private TextView viewTaste;
-    private TextView viewStars;
-    private ImageView viewImage;
-    private EditText commentText;
-    private Button commentButton;
+    private TextView mViewName;
+    private TextView mViewVolume;
+    private TextView mViewAlcohol;
+    private TextView mViewPrice;
+    private TextView mViewTate;
+    private TextView mViewStars;
+    private ImageView mViewImage;
+    private EditText mCommentText;
+    private Button mCommentButton;
 
     //URL and Request parameters
     private static final String HOST_URL_DATA = "http://10.0.2.2:8080/beers";
@@ -113,21 +120,21 @@ public class BeerActivity extends AppCompatActivity {
         loadBeerData();
 
         //Make it so you are only able to comment when logged in
-        commentText = (EditText) findViewById(R.id.comment_input);
-        commentButton = (Button) findViewById(R.id.comment_button);
+        mCommentText = (EditText) findViewById(R.id.comment_input);
+        mCommentButton = (Button) findViewById(R.id.comment_button);
         if(LoginActivity.user == null){
-            commentText.setVisibility(View.GONE);
-            commentButton.setVisibility(View.GONE);
+            mCommentText.setVisibility(View.GONE);
+            mCommentButton.setVisibility(View.GONE);
         }
         else{
             //Handle if someone presses comment button
             //first check if comment is not empty then post
-            commentButton.setOnClickListener(new View.OnClickListener() {
+            mCommentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(BeerActivity.this, "TETETE", Toast.LENGTH_SHORT).show();
-                    if(!isEmpty(commentText)){
-                        String comment = commentText.getText().toString().trim();
+                    if(!isEmpty(mCommentText)){
+                        String comment = mCommentText.getText().toString().trim();
                         postComment(comment);
                     }
                 }
@@ -194,37 +201,37 @@ public class BeerActivity extends AppCompatActivity {
                             JSONObject object = new JSONObject(response);
 
                             name = object.getString("name");
-                            viewName = findViewById(R.id.beerName);
-                            viewName.setText(name);
+                            mViewName = findViewById(R.id.beerName);
+                            mViewName.setText(name);
                             System.out.println(name);
 
                             stars = object.getString("stars");
-                            viewStars = findViewById(R.id.beerStars);
-                            viewStars.setText("Rating: " + stars);
+                            mViewStars = findViewById(R.id.beerStars);
+                            mViewStars.setText("Rating: " + stars);
                             System.out.println(stars);
 
                             alcohol = object.getString("alcohol");
-                            viewAlcohol = findViewById(R.id.beerAlcohol);
-                            viewAlcohol.setText("Alcohol: " + alcohol + "%");
+                            mViewAlcohol = findViewById(R.id.beerAlcohol);
+                            mViewAlcohol.setText("Alcohol: " + alcohol + "%");
                             System.out.println(alcohol);
 
                             volume = object.getString("volume");
-                            viewVolume = findViewById(R.id.beerVolume);
-                            viewVolume.setText("Volume: " + volume);
+                            mViewVolume = findViewById(R.id.beerVolume);
+                            mViewVolume.setText("Volume: " + volume);
 
                             linkToVinbudin = object.getString("linkToVinbudin");
 
                             taste = object.getString("taste");
-                            viewTaste = findViewById(R.id.beerTaste);
-                            viewTaste.setText(taste);
+                            mViewTate = findViewById(R.id.beerTaste);
+                            mViewTate.setText(taste);
 
                             price = object.getString("price");
-                            viewPrice = findViewById(R.id.beerPrice);
-                            viewPrice.setText("Price: " + price + "kr");
+                            mViewPrice = findViewById(R.id.beerPrice);
+                            mViewPrice.setText("Price: " + price + "kr");
 
                             //beerId = object.getString("beerId");
-                            viewImage = findViewById(R.id.beerImage);
-                            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+beerId+"_r.jpg").into(viewImage);
+                            mViewImage = findViewById(R.id.beerImage);
+                            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+beerId+"_r.jpg").into(mViewImage);
 
 
                             JSONArray comment_list = object.getJSONArray("comments");

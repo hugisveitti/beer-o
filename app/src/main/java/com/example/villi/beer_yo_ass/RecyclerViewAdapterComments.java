@@ -1,3 +1,10 @@
+/**
+ * The RecyclerViewAdapter classes are used to display a list of some items.
+ * This class is mainly used to dislay comments in the beer page.
+ * The RecyclerViewAdapter takes in comment data and sets it up in a list like shown
+ * in its corresponding layout.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.content.Context;

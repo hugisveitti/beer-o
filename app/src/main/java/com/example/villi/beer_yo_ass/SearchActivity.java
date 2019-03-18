@@ -1,3 +1,13 @@
+/**
+ * The searchActivity handles all search related things, it makes
+ * a request to the backend if data is not sent to it as an intent
+ * and sorts the data and displays it. From here one can go to the
+ * pages of individual beers.
+ * All sorting and filtering is done on the frontend because the
+ * data is rather small and no need to make alot of requests.
+ */
+
+
 package com.example.villi.beer_yo_ass;
 
 import android.app.ProgressDialog;
@@ -47,9 +57,9 @@ public class SearchActivity extends AppCompatActivity {
     private static final String TAG = "SearchActivity";
     private static final String URL_DATA = "http://10.0.2.2:8080/beers";
 
-    private EditText search_string;
-    private EditText over_price;
-    private EditText under_price;
+    private EditText mSearch_string;
+    private EditText mOver_price;
+    private EditText mUnder_price;
 
     // variables for the json data
     private ArrayList<String> mbeer_id = new ArrayList<>();
@@ -58,15 +68,15 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<String> mbeer_price = new ArrayList<>();
 
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
-    private ArrayList<JSONObject> sorted_data;
+    private ArrayList<JSONObject> mSorted_data;
 
     private JSONArray jsonArray;
     private JSONArray sortedJsonArray;
 
-    private String sortby = "";
-    private int underPrice = -1;
-    private int overPrice = -1;
-    private String searchName = "";
+    private String msortBy = "";
+    private int mUnderPrice = -1;
+    private int mOverPrice = -1;
+    private String mSearchName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +170,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //Annoyingly complicated function processing data, some JSON gymnastics to be able to sort
-    //In the end data gets loaded and sorted into sorted_data
+    //In the end data gets loaded and sorted into mSorted_data
     private void makeBeerList() throws JSONException {
         System.out.println("Search that shit cuz");
 
@@ -181,15 +191,15 @@ public class SearchActivity extends AppCompatActivity {
             for (int i = 0; i < mbeer_data.size(); i++) {
                 jsonArray.put(mbeer_data.get(i));
             }
-            if(sortby != "") {
+            if(msortBy != "") {
                 sortedJsonArray = sortList(jsonArray);
             }
             else{
                 sortedJsonArray = jsonArray;
             }
-            sorted_data = new ArrayList<>();
+            mSorted_data = new ArrayList<>();
             for(int i = 0; i < sortedJsonArray.length(); i++){
-                sorted_data.add(new JSONObject(String.valueOf(sortedJsonArray.get(i))));
+                mSorted_data.add(new JSONObject(String.valueOf(sortedJsonArray.get(i))));
             }
 
         } catch (JSONException e) {
@@ -201,11 +211,11 @@ public class SearchActivity extends AppCompatActivity {
     private void initRecyclerView() {
 
         try {
-            for (int i = 0; i < sorted_data.size(); i++) {
-                mbeer_id.add(sorted_data.get(i).get("beerId") + "");
-                mbeer_name.add(sorted_data.get(i).get("name") + "");
-                mbeer_volume.add("Magn " + sorted_data.get(i).get("volume") + " ml.");
-                mbeer_price.add(sorted_data.get(i).get("price") + " kr.");
+            for (int i = 0; i < mSorted_data.size(); i++) {
+                mbeer_id.add(mSorted_data.get(i).get("beerId") + "");
+                mbeer_name.add(mSorted_data.get(i).get("name") + "");
+                mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
+                mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
             }
 
         } catch (JSONException e) {
@@ -221,20 +231,20 @@ public class SearchActivity extends AppCompatActivity {
     //Filter out beers if they dont meet constraints in search filter
     private  boolean checkConstraints(JSONObject obj) throws JSONException {
         Boolean bool = true;
-        if(underPrice > 0 && underPrice > overPrice){
-            if(underPrice < Double.parseDouble(obj.get("price") + "")){
+        if(mUnderPrice > 0 && mUnderPrice > mOverPrice){
+            if(mUnderPrice < Double.parseDouble(obj.get("price") + "")){
                 bool = false;
                 return bool;
             }
         }
-        if(overPrice > 0 && underPrice > overPrice){
-            if(overPrice > Double.parseDouble(obj.get("price") + "")){
+        if(mOverPrice > 0 && mUnderPrice > mOverPrice){
+            if(mOverPrice > Double.parseDouble(obj.get("price") + "")){
                 bool = false;
                 return bool;
             }
         }
-        if(searchName != ""){
-            if(!(obj.get("name") + "").toLowerCase().contains(searchName.toLowerCase())){
+        if(mSearchName != ""){
+            if(!(obj.get("name") + "").toLowerCase().contains(mSearchName.toLowerCase())){
                 bool = false;
                 return bool;
             }
@@ -247,12 +257,12 @@ public class SearchActivity extends AppCompatActivity {
     private void searchRecyclerView() {
 
         try {
-            for (int i = 0; i < sorted_data.size(); i++) {
-                if(checkConstraints(sorted_data.get(i))){
-                    mbeer_id.add(sorted_data.get(i).get("beerId") + "");
-                    mbeer_name.add(sorted_data.get(i).get("name") + "");
-                    mbeer_volume.add("Magn " + sorted_data.get(i).get("volume") + " ml.");
-                    mbeer_price.add(sorted_data.get(i).get("price") + " kr.");
+            for (int i = 0; i < mSorted_data.size(); i++) {
+                if(checkConstraints(mSorted_data.get(i))){
+                    mbeer_id.add(mSorted_data.get(i).get("beerId") + "");
+                    mbeer_name.add(mSorted_data.get(i).get("name") + "");
+                    mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
+                    mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
                 }
             }
 
@@ -266,8 +276,8 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    //Take in JSONArray and sort it with regards to a KEY, here the variable sortby
-    //Sortby is changed with radio buttons
+    //Take in JSONArray and sort it with regards to a KEY, here the variable msortBy
+    //msortBy is changed with radio buttons
     private JSONArray sortList(JSONArray jsonArr) throws JSONException {
 
         JSONArray sortedJsonArray = new JSONArray();
@@ -278,7 +288,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         Collections.sort( jsonValues, new Comparator<JSONObject>() {
             //You can change "Name" with "ID" if you want to sort by ID
-            private String KEY_NAME = sortby;
+            private String KEY_NAME = msortBy;
 
             @Override
             public int compare(JSONObject a, JSONObject b) {
@@ -286,7 +296,7 @@ public class SearchActivity extends AppCompatActivity {
                 String valB = new String();
 
                 try {
-                    if(sortby != "name"){
+                    if(msortBy != "name"){
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
                     }
@@ -311,7 +321,7 @@ public class SearchActivity extends AppCompatActivity {
         return sortedJsonArray;
     }
 
-    //Radio buttons change sortby variable which is referred to when sorting
+    //Radio buttons change msortBy variable which is referred to when sorting
     public void onRadioButtonClicked(View view) throws JSONException {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -320,19 +330,19 @@ public class SearchActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.by_alphabetical:
                 if (checked) {
-                    sortby = "name";
+                    msortBy = "name";
                     reloadView();
                     break;
                 }
             case R.id.by_alcohol:
                 if (checked){
-                    sortby = "alcohol";
+                    msortBy = "alcohol";
                     reloadView();
                     break;
                 }
             case R.id.by_price:
                 if (checked) {
-                    sortby = "price";
+                    msortBy = "price";
                     reloadView();
                     break;
                 }
@@ -357,26 +367,26 @@ public class SearchActivity extends AppCompatActivity {
 
     //Take all filter inputs and process to get results
     public void onSearchButtonClicked(View view) throws JSONException {
-        search_string = (EditText) findViewById(R.id.search_name);
-        over_price = (EditText) findViewById(R.id.price_over_input);
-        under_price = (EditText) findViewById(R.id.price_under_input);
-        if(isEmpty(search_string)){
-            searchName = "";
+        mSearch_string = (EditText) findViewById(R.id.search_name);
+        mOver_price = (EditText) findViewById(R.id.price_over_input);
+        mUnder_price = (EditText) findViewById(R.id.price_under_input);
+        if(isEmpty(mSearch_string)){
+            mSearchName = "";
         }
         else{
-            searchName = search_string.getText().toString().trim();
+            mSearchName = mSearch_string.getText().toString().trim();
         }
-        if(isEmpty(over_price)){
-            overPrice = -1;
-        }
-        else{
-            overPrice = Integer.valueOf(over_price.getText().toString().trim());
-        }
-        if(isEmpty(under_price)){
-            underPrice = -1;
+        if(isEmpty(mOver_price)){
+            mOverPrice = -1;
         }
         else{
-            underPrice = Integer.valueOf(under_price.getText().toString().trim());
+            mOverPrice = Integer.valueOf(mOver_price.getText().toString().trim());
+        }
+        if(isEmpty(mUnder_price)){
+            mUnderPrice = -1;
+        }
+        else{
+            mUnderPrice = Integer.valueOf(mUnder_price.getText().toString().trim());
         }
         reloadView();
     }

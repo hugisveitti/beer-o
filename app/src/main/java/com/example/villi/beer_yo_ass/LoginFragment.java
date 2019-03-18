@@ -1,3 +1,9 @@
+/**
+ * The Login Fragment handles specifically a login function.
+ * It is an extension on LoginActivity and makes requests to the
+ * server and handles the resposes.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.app.FragmentManager;

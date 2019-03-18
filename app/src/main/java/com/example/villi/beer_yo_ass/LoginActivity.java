@@ -1,3 +1,10 @@
+/**
+ * The LoginActivity handles login related problems.
+ * It makes fragments for both signup and login.
+ * The public variable user is here used to indicate who
+ * is logged in.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.app.Fragment;

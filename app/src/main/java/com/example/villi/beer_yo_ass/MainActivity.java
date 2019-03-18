@@ -1,3 +1,10 @@
+/**
+ * The mainActivity is the greedingpage of the app. At the moment
+ * it is rather empty but soon will have more features.
+ * Now its main purpose is to load the data and send it along to the
+ * searchpage.
+ */
+
 package com.example.villi.beer_yo_ass;
 
 import android.app.ProgressDialog;
