@@ -54,9 +54,9 @@ public class BeerActivity extends AppCompatActivity {
     private Button mCommentButton;
 
     //URL and Request parameters
-    private static final String HOST_URL_DATA = "http://10.0.2.2:8080/beers";
-    private static String URL_DATA = "http://10.0.2.2:8080/beers";
-    private static String COMMENT_URL_DATA = "http://10.0.2.2:8080/comment/";
+    private static final String HOST_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
+    private static String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
+    private static String COMMENT_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/comment/";
 
     //beerdata variables
     private String name;

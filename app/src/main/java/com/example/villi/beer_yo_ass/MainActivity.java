@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     // To be able to fetch the data you need to run the beer-yo-ass backend
     // TODO: Set the backend up on Heroku
     //    private static final String URL_DATA = "http://localhost:8080/beers";
-    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
+    private static final String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
 
     private BottomNavigationView bottomNavigation;
     private TextView mUser_textview;

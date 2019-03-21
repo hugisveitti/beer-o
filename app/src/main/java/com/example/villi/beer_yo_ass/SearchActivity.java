@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private static final String TAG = "SearchActivity";
-    private static final String URL_DATA = "http://10.0.2.2:8080/beers";
+    private static final String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
 
     private EditText mSearch_string;
     private EditText mOver_price;

@@ -95,7 +95,7 @@ public class LoginFragment extends Fragment {
      * user was able to login otherwise it sends false
      */
     private void attemptLogin(final String username, String password) {
-        String URL_DATA = "http://10.0.2.2:8080/login/"+username+"/"+password;
+        String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/login/"+username+"/"+password;
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading data...");
