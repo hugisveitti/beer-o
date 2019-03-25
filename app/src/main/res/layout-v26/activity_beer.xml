@@ -9,7 +9,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="224dp"
+        android:layout_height="304dp"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="379dp"
@@ -37,94 +37,134 @@
 
     <TextView
         android:id="@+id/beerName"
-        android:layout_width="155dp"
-        android:layout_height="43dp"
+        android:layout_width="113dp"
+        android:layout_height="34dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="84dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="@string/name" />
 
     <TextView
         android:id="@+id/beerVolume"
-        android:layout_width="96dp"
-        android:layout_height="34dp"
+        android:layout_width="128dp"
+        android:layout_height="38dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginTop="202dp"
+        android:layout_marginEnd="14dp"
         android:layout_toStartOf="@+id/beerPrice"
         android:text="@string/volume" />
 
     <TextView
         android:id="@+id/beerStars"
-        android:layout_width="154dp"
-        android:layout_height="39dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="113dp"
+        android:layout_height="37dp"
+        android:layout_below="@+id/beerName"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="93dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="84dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="@string/stars" />
 
     <TextView
         android:id="@+id/beerAlcohol"
-        android:layout_width="93dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="199dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="13dp"
         android:layout_toStartOf="@+id/beerVolume"
         android:text="@string/alcohol" />
 
     <TextView
         android:id="@+id/beerPrice"
-        android:layout_width="85dp"
-        android:layout_height="31dp"
+        android:layout_width="108dp"
+        android:layout_height="39dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="199dp"
-        android:layout_marginEnd="83dp"
+        android:layout_marginTop="202dp"
+        android:layout_marginEnd="23dp"
         android:text="@string/price" />
 
     <TextView
         android:id="@+id/beerTaste"
-        android:layout_width="184dp"
-        android:layout_height="44dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_below="@+id/beerStars"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="214dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="470dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="542dp"
+        android:layout_toEndOf="@+id/beerImage"
         android:text="@string/taste" />
 
     <EditText
         android:id="@+id/comment_input"
-        android:layout_width="333dp"
-        android:layout_height="117dp"
+        android:layout_width="291dp"
+        android:layout_height="115dp"
+        android:layout_alignEnd="@+id/comment_button"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="246dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="97dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/comment_here"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        tools:targetApi="o" />
 
     <Button
         android:id="@+id/comment_button"
-        android:layout_width="46dp"
-        android:layout_height="111dp"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="245dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="314dp"
+        android:layout_marginTop="266dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/comment"
         android:textSize="12sp" />
+
+    <ImageButton
+        android:id="@+id/heartButton"
+        android:background="@null"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="13dp"
+        app:srcCompat="@drawable/gray_heart" />
+
+    <ImageButton
+        android:id="@+id/beerlistButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/ratingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="131dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        app:srcCompat="@android:drawable/btn_star" />
 
 </RelativeLayout>

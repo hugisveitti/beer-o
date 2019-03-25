@@ -7,6 +7,7 @@
 
 package com.example.villi.beer_yo_ass;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,11 +54,16 @@ public class BeerActivity extends AppCompatActivity {
     private ImageView mViewImage;
     private EditText mCommentText;
     private Button mCommentButton;
+    private ImageButton mHeartButton;
+    private ImageButton mBeerlistButton;
+    private ImageButton mRatingButton;
 
     //URL and Request parameters
+    private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String HOST_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
     private static String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
     private static String COMMENT_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/comment/";
+    private static String MY_BEERS_URL = HOST_URL + "addToMyBeers/";
 
     //beerdata variables
     private String name;
@@ -76,6 +83,8 @@ public class BeerActivity extends AppCompatActivity {
     private ArrayList<String> comment_time = new ArrayList<>();
     private ArrayList<String> comment_title = new ArrayList<>();
     private ArrayList<JSONObject> comment_data = new ArrayList<>();
+
+    private Boolean isLiked = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,25 +131,197 @@ public class BeerActivity extends AppCompatActivity {
         //Make it so you are only able to comment when logged in
         mCommentText = (EditText) findViewById(R.id.comment_input);
         mCommentButton = (Button) findViewById(R.id.comment_button);
+        mHeartButton = (ImageButton) findViewById(R.id.heartButton);
+        mBeerlistButton = (ImageButton) findViewById(R.id.beerlistButton);
+        mRatingButton = (ImageButton) findViewById(R.id.ratingButton);
         if(LoginActivity.user == null){
             mCommentText.setVisibility(View.GONE);
             mCommentButton.setVisibility(View.GONE);
+            mHeartButton.setVisibility(View.GONE);
+            mBeerlistButton.setVisibility(View.GONE);
+            mRatingButton.setVisibility(View.GONE);
         }
         else{
+            initHeart();
             //Handle if someone presses comment button
             //first check if comment is not empty then post
             mCommentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(BeerActivity.this, "TETETE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BeerActivity.this, "CommentPosted", Toast.LENGTH_SHORT).show();
                     if(!isEmpty(mCommentText)){
                         String comment = mCommentText.getText().toString().trim();
                         postComment(comment);
                     }
                 }
             });
+            mHeartButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(BeerActivity.this, "Heart", Toast.LENGTH_SHORT).show();
+                    if(isLiked()){
+                        dislikeBeer();
+                    }
+                    else{
+                        likeBeer();
+                    }
+
+                }
+            });
+            mRatingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(BeerActivity.this, "RateMeDaddy", Toast.LENGTH_SHORT).show();
+                    openRatings();
+
+                }
+            });
+            mBeerlistButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(BeerActivity.this, "AddMeBeer", Toast.LENGTH_SHORT).show();
+                    openBeerlistMenu();
+                }
+            });
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 101) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    }
+
+    private void initHeart() {
+        String url = HOST_URL + "myBeers/" + LoginActivity.user;
+        System.out.println(url);
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            isLiked = false;
+                            JSONArray likedBeers = new JSONArray(response);
+                            for (int i = 0; i < likedBeers.length(); i++) {
+                                JSONObject temp = likedBeers.getJSONObject(i);
+                                String idTemp = temp.getString("beerId");
+                                if(idTemp.equals(beerId)){
+                                    isLiked = true;
+                                }
+                            }
+                            setHeart();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(BeerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void setHeart(){
+        if(isLiked()){
+            mHeartButton.setImageResource(R.drawable.red_heart);
+        }
+        else{
+            mHeartButton.setImageResource(R.drawable.gray_heart);
+        }
+    }
+
+    private void openBeerlistMenu() {
+        //TODO
+        Intent intent1 = new Intent(BeerActivity.this, BeerlistPopup.class);
+
+        intent1.putExtra("BEER_ID", String.valueOf(beerId));
+        startActivityForResult(intent1, 101);
+        //startActivity(intent1);
+    }
+
+    private void openRatings() {
+
+        Intent intent1 = new Intent(BeerActivity.this, RatingPopup.class);
+
+        intent1.putExtra("BEER_ID", String.valueOf(beerId));
+        startActivityForResult(intent1, 101);
+        //startActivity(intent1);
+    }
+
+    private void likeBeer() {
+        //TODO
+        String url = MY_BEERS_URL +
+                     LoginActivity.user + "/" +
+                     beerId;
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.addingToFav));
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        toggleLike();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(BeerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void dislikeBeer() {
+        //TODO
+    }
+    private void toggleLike(){
+        if(isLiked == false){
+            mHeartButton.setImageResource(R.drawable.red_heart);
+            isLiked = true;
+        }
+        else if(isLiked == true){
+            mHeartButton.setImageResource(R.drawable.gray_heart);
+            isLiked = false;
+        }
+        else{
+
+        }
+    }
+    private boolean isLiked() {
+        //TODO
+        if(isLiked == null){
+           initHeart();
+        }
+        return isLiked;
     }
 
     private boolean isEmpty(EditText etText) {
@@ -159,7 +340,7 @@ public class BeerActivity extends AppCompatActivity {
                      comment + "/" +
                      -1;
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading data...");
+        progressDialog.setMessage("Posting comment...");
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 url,
@@ -207,7 +388,7 @@ public class BeerActivity extends AppCompatActivity {
 
                             stars = object.getString("stars");
                             mViewStars = findViewById(R.id.beerStars);
-                            mViewStars.setText("Rating: " + stars);
+                            mViewStars.setText("Rating: " + stars + "/5");
                             System.out.println(stars);
 
                             alcohol = object.getString("alcohol");
@@ -217,7 +398,7 @@ public class BeerActivity extends AppCompatActivity {
 
                             volume = object.getString("volume");
                             mViewVolume = findViewById(R.id.beerVolume);
-                            mViewVolume.setText("Volume: " + volume);
+                            mViewVolume.setText("Volume: " + volume + "ml");
 
                             linkToVinbudin = object.getString("linkToVinbudin");
 

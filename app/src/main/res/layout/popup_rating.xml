@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/rateBeerText"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="56dp"
+        android:text="Rate this beer"
+        android:textSize="24sp" />
+
+    <RatingBar
+        android:id="@+id/beerRatingBar"
+        android:layout_width="246dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rateBeerText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="24dp"
+        android:stepSize=".5" />
+
+    <Button
+        android:id="@+id/rateSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/beerRatingBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="28dp"
+        android:text="Submit rating" />
+
+    <TextView
+        android:id="@+id/ratingMessage"
+        android:layout_width="68dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/rateSubmitButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="19dp" />
+</RelativeLayout>

@@ -57,7 +57,9 @@
     <string name="beer_yo_ass">Beer-Yo-Ass</string>
     <string name="logo">Logo</string>
     <string name="button">Button</string>
-
+    <string name="addingToFav">Adding beer to favorites</string>
+    <string name="title_activity_rating_popup">RatingPopup</string>
+    <string name="action_settings">Settings</string>
 
 
 </resources>

@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private LoginFragment loginFragment;
-    public static String user = null;
+    public static String user = "villi";
 
 
     @Override

@@ -16,7 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".BeerActivity"></activity>
+        <activity
+            android:name=".RatingPopup"
+            android:theme="@style/AppTheme.PopupTheme">
+        </activity>
+        <activity
+            android:name=".BeerlistPopup"
+            android:theme="@style/AppTheme.PopupTheme">
+        </activity>
+        <activity android:name=".BeerActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
