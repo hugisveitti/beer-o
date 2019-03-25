@@ -256,8 +256,8 @@ public class BeerActivity extends AppCompatActivity {
         Intent intent1 = new Intent(BeerActivity.this, BeerlistPopup.class);
 
         intent1.putExtra("BEER_ID", String.valueOf(beerId));
-        startActivityForResult(intent1, 101);
-        //startActivity(intent1);
+        //startActivityForResult(intent1, 101);
+        startActivity(intent1);
     }
 
     private void openRatings() {

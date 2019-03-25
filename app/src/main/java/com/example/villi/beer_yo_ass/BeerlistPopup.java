@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +24,10 @@ import com.android.volley.toolbox.Volley;
 
 public class BeerlistPopup extends AppCompatActivity {
 
-    private Button mSubmitButton;
-    private RatingBar mRatingBar;
-    private TextView mMessage;
+    private Button mNewBeerlistButton;
+    private EditText mNewBeerlistInput;
+    private RecyclerView mbeerlistList;
+
 
     private String beerId;
 
@@ -46,16 +49,7 @@ public class BeerlistPopup extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*0.8), (int)(height*0.6));
 
-        mRatingBar = (RatingBar) findViewById(R.id.beerRatingBar);
-        mSubmitButton = (Button) findViewById(R.id.rateSubmitButton);
-        mMessage = (TextView) findViewById(R.id.ratingMessage);
-        mMessage.setText("");
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
     }
 
 

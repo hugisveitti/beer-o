@@ -10,27 +10,51 @@
         android:layout_height="56dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="176dp"
         android:text="Add beer to an existing beerlist"
         android:textSize="18sp" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="367dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/beerlist_recycler_view"
+        android:layout_width="281dp"
+        android:layout_height="142dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="222dp" />
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="252dp" />
 
     <TextView
         android:id="@+id/NewBeerlistText"
-        android:layout_width="228dp"
-        android:layout_height="57dp"
+        android:layout_width="217dp"
+        android:layout_height="31dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="28dp"
-        android:text="Add beer to a new Beerlist" />
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="16dp"
+        android:text="Add beer to a new Beerlist"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/newBeerlistInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="65dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <Button
+        android:id="@+id/submitNewDrinklist"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="115dp"
+        android:text="Add to new beerlist" />
 
 </RelativeLayout>
