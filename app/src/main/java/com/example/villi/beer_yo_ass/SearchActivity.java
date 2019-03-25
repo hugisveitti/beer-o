@@ -137,10 +137,6 @@ public class SearchActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         try {
                             JSONArray jsonArray = new JSONArray(response);
-                            System.out.println(jsonArray.get(1));
-                            System.out.println("Lengd: " + jsonArray.length());
-                            System.out.println(jsonArray.getJSONObject(1).get("beerId"));
-                            System.out.println("Náði að sækja");
 
                             // add the beers to ArrayList of beer
                             for (int i = 0; i < jsonArray.length(); i++) {

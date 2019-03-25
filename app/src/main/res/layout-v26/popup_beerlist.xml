@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
@@ -10,19 +11,19 @@
         android:layout_height="56dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="262dp"
         android:text="Add beer to an existing beerlist"
         android:textSize="18sp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/beerlist_recycler_view"
+        android:id="@+id/beerlistRecyclerView"
         android:layout_width="281dp"
         android:layout_height="142dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="252dp" />
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="328dp" />
 
     <TextView
         android:id="@+id/NewBeerlistText"
@@ -45,16 +46,38 @@
         android:layout_marginTop="65dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="Name of new beerlists"/>
 
     <Button
-        android:id="@+id/submitNewDrinklist"
+        android:id="@+id/submitNewDrinklistButton"
         android:layout_width="179dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="158dp"
         android:text="Add to new beerlist" />
+
+    <TextView
+        android:id="@+id/messageView"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="220dp" />
+
+    <Switch
+        android:id="@+id/switchPrivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="119dp"
+        android:checked="false"
+        android:showText="false"
+        android:splitTrack="false"
+        android:text="Private" />
 
 </RelativeLayout>
