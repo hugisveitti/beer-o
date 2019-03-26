@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,7 +117,7 @@ public class BeerActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_my_page:
-                        Intent intent2 = new Intent(BeerActivity.this, LoginActivity.class);
+                        Intent intent2 = new Intent(BeerActivity.this, UserActivity.class);
                         startActivity(intent2);
                         break;
                 }
@@ -134,7 +133,7 @@ public class BeerActivity extends AppCompatActivity {
         mHeartButton = (ImageButton) findViewById(R.id.heartButton);
         mBeerlistButton = (ImageButton) findViewById(R.id.beerlistButton);
         mRatingButton = (ImageButton) findViewById(R.id.ratingButton);
-        if(LoginActivity.user == null){
+        if(UserActivity.user == null){
             mCommentText.setVisibility(View.GONE);
             mCommentButton.setVisibility(View.GONE);
             mHeartButton.setVisibility(View.GONE);
@@ -199,7 +198,7 @@ public class BeerActivity extends AppCompatActivity {
     }
 
     private void initHeart() {
-        String url = HOST_URL + "myBeers/" + LoginActivity.user;
+        String url = HOST_URL + "myBeers/" + UserActivity.user;
         System.out.println(url);
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading data...");
@@ -272,7 +271,7 @@ public class BeerActivity extends AppCompatActivity {
     private void likeBeer() {
         //TODO
         String url = MY_BEERS_URL +
-                     LoginActivity.user + "/" +
+                     UserActivity.user + "/" +
                      beerId;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -334,9 +333,9 @@ public class BeerActivity extends AppCompatActivity {
     //Simple Post request with parameters in url
     private void postComment(String comment) {
         String url = COMMENT_URL_DATA +
-                     LoginActivity.user + "/" +
+                     UserActivity.user + "/" +
                      beerId + "/" +
-                     LoginActivity.user + "/" +
+                     UserActivity.user + "/" +
                      comment + "/" +
                      -1;
         final ProgressDialog progressDialog = new ProgressDialog(this);

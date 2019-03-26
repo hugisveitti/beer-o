@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +41,7 @@ public class BeerlistPopup extends AppCompatActivity {
     private String beerId;
     private ArrayList<String> mBeerlistIds = new ArrayList<>();
     private ArrayList<String> mBeerlistNames = new ArrayList<>();
-    private ArrayList<JSONObject> mBeerlist_data = new ArrayList<>();;
+    private ArrayList<JSONObject> mBeerlist_data = new ArrayList<>();
 
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String CREATE_BEERLIST_URL = HOST_URL + "createDrinklist/";
@@ -102,7 +101,7 @@ public class BeerlistPopup extends AppCompatActivity {
 
         ///createDrinklist/{username}/{name}/{public}
         String url = CREATE_BEERLIST_URL +
-                     LoginActivity.user + "/" +
+                     UserActivity.user + "/" +
                      name + "/" +
                      publ;
 
@@ -144,7 +143,7 @@ public class BeerlistPopup extends AppCompatActivity {
 
         ///addToDrinklist/{username}/{drinklistId}/{beerId}
         String url = ADD_TO_BEERLIST_URL +
-                     LoginActivity.user + "/" +
+                     UserActivity.user + "/" +
                      beerlistId + "/" +
                      beerId;
         System.out.println(url);
@@ -188,15 +187,15 @@ public class BeerlistPopup extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        String type = "addbeerlist";
         RecyclerView recyclerView = findViewById(R.id.beerlistRecyclerView);
-        RecyclerViewAdapterBeerlist adapter = new RecyclerViewAdapterBeerlist(this, mBeerlistNames, mBeerlistIds,beerId);
+        RecyclerViewAdapterBeerlist adapter = new RecyclerViewAdapterBeerlist(this, mBeerlistNames, mBeerlistIds,beerId,type);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void loadBeerData() {
-        String url = MY_BEERLISTS_URL + LoginActivity.user;
+        String url = MY_BEERLISTS_URL + UserActivity.user;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Getting your beerlists...");

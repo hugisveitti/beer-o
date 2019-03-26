@@ -1,6 +1,6 @@
 /**
  * The Signup Fragment handles specifically a signup function.
- * It is an extension on LoginActivity and makes requests to the
+ * It is an extension on UserActivity and makes requests to the
  * server and handles the resposes.
  */
 
@@ -23,9 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 
 /**
@@ -113,7 +110,7 @@ public class SignupFragment extends Fragment {
                         if (response.equals("false")) {
                             Toast.makeText(getActivity(), "Notandanafn ekki laust", Toast.LENGTH_SHORT).show();
                         } else {
-                            LoginActivity.user = username;
+                            UserActivity.user = username;
                             Toast.makeText(getActivity(), "Velkominn " + username, Toast.LENGTH_SHORT).show();
                         }
 

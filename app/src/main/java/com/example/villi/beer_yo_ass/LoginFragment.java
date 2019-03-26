@@ -1,13 +1,11 @@
 /**
  * The Login Fragment handles specifically a login function.
- * It is an extension on LoginActivity and makes requests to the
+ * It is an extension on UserActivity and makes requests to the
  * server and handles the resposes.
  */
 
 package com.example.villi.beer_yo_ass;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,10 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +34,7 @@ public class LoginFragment extends Fragment {
     private TextView text_password;
     private TextView no_account;
     private SignupFragment signupFragment;
+    private UserPageFragment userPageFragment;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -112,8 +107,16 @@ public class LoginFragment extends Fragment {
                             System.out.println("Náði að sækja");
 
                             if (response.equals("true")) {
-                                LoginActivity.user = username;
-                                Toast.makeText(getActivity(), "user = " + LoginActivity.user, Toast.LENGTH_SHORT).show();
+                                UserActivity.user = username;
+                                Toast.makeText(getActivity(), "user = " + UserActivity.user, Toast.LENGTH_SHORT).show();
+                                userPageFragment = new UserPageFragment();
+
+                                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                fragmentManager.popBackStackImmediate();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.login_form, userPageFragment)
+                                        .addToBackStack(null)
+                                        .commit();
                             } else {
                                 Toast.makeText(getActivity(), "vitlaust notenda nafn eða lykilorð", Toast.LENGTH_SHORT).show();
 

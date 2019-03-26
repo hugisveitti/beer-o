@@ -3,7 +3,6 @@ package com.example.villi.beer_yo_ass;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.hardware.display.DisplayManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -66,10 +65,10 @@ public class RatingPopup extends AppCompatActivity {
     }
 
     private void sendRating(float rating) {
-        if(LoginActivity.user != null){
+        if(UserActivity.user != null){
             String url = HOST_URL +
                     "comment/" +
-                    LoginActivity.user + "/" +
+                    UserActivity.user + "/" +
                     beerId + "/" +
                     "rating/" +
                     "RatingComment/" +

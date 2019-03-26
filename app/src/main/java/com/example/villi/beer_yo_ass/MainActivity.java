@@ -15,9 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
 
 
-        if (LoginActivity.user == null) {
+        if (UserActivity.user == null) {
             mUser_textview.setText("Notandi ekki skráður inn");
         } else {
-            mUser_textview.setText("Velkominn " + LoginActivity.user);
+            mUser_textview.setText("Velkominn " + UserActivity.user);
         }
 
 
@@ -85,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
 
-                        intent1.putStringArrayListExtra("BEER_DATA", mbeer_data_string);
+                        //intent1.putStringArrayListExtra("BEER_DATA", mbeer_data_string);
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_my_page:
-                        Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                        Intent intent2 = new Intent(MainActivity.this, UserActivity.class);
                         startActivity(intent2);
                         break;
                 }
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         // The data is only loaded if the data array is empty
         if(mbeer_data.size() == 0){
-            loadBeerData();
+            //loadBeerData();
         }
 
 

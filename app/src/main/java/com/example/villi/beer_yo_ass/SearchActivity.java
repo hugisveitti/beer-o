@@ -12,7 +12,6 @@ package com.example.villi.beer_yo_ass;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -22,9 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -39,17 +36,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -73,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
     private JSONArray jsonArray;
     private JSONArray sortedJsonArray;
 
-    private String msortBy = "";
+    private String msortBy = "name";
     private int mUnderPrice = -1;
     private int mOverPrice = -1;
     private String mSearchName = "";
@@ -95,8 +85,6 @@ public class SearchActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //make list of beers to display
-        initRecyclerView();
 
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -113,7 +101,7 @@ public class SearchActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_my_page:
-                        Intent intent2 = new Intent(SearchActivity.this, LoginActivity.class);
+                        Intent intent2 = new Intent(SearchActivity.this, UserActivity.class);
                         startActivity(intent2);
                         break;
                 }
@@ -143,9 +131,7 @@ public class SearchActivity extends AppCompatActivity {
                                 mbeer_data.add(jsonArray.getJSONObject(i));
                             }
 
-                            System.out.println(mbeer_data.get(0));
-                            System.out.println(mbeer_data.size());
-
+                            loadDataToSort();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -179,30 +165,33 @@ public class SearchActivity extends AppCompatActivity {
                 else {
                     for (int i = 0; i < beer_list.size(); i++) {
                         mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
+                        loadDataToSort();
                     }
                 }
             }
 
-            jsonArray = new JSONArray();
-            for (int i = 0; i < mbeer_data.size(); i++) {
-                jsonArray.put(mbeer_data.get(i));
-            }
-            if(msortBy != "") {
-                sortedJsonArray = sortList(jsonArray);
-            }
-            else{
-                sortedJsonArray = jsonArray;
-            }
-            mSorted_data = new ArrayList<>();
-            for(int i = 0; i < sortedJsonArray.length(); i++){
-                mSorted_data.add(new JSONObject(String.valueOf(sortedJsonArray.get(i))));
-            }
 
         } catch (JSONException e) {
             System.out.print(e);
         }
     }
-
+    private void loadDataToSort() throws JSONException {
+        jsonArray = new JSONArray();
+        for (int i = 0; i < mbeer_data.size(); i++) {
+            jsonArray.put(mbeer_data.get(i));
+        }
+        if(msortBy != "") {
+            sortedJsonArray = sortList(jsonArray);
+        }
+        else{
+            sortedJsonArray = jsonArray;
+        }
+        mSorted_data = new ArrayList<>();
+        for(int i = 0; i < sortedJsonArray.length(); i++){
+            mSorted_data.add(new JSONObject(String.valueOf(sortedJsonArray.get(i))));
+        }
+        initRecyclerView();
+    }
     //Load every beer in mbeerdata in RecycleView list of beers
     private void initRecyclerView() {
 

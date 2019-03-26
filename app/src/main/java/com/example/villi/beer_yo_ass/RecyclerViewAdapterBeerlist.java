@@ -10,9 +10,7 @@ package com.example.villi.beer_yo_ass;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,16 +36,17 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<String> mBeerlistName = new ArrayList<>();
     private ArrayList<String> mBeerlistId = new ArrayList<>();
     private String beerId;
-
+    private String type;
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String ADD_TO_BEERLIST_URL = HOST_URL + "addToDrinklist/";
 
 
-    public RecyclerViewAdapterBeerlist(Context mContext, ArrayList<String> beerlistName, ArrayList<String> beerlistId, String beerId) {
+    public RecyclerViewAdapterBeerlist(Context mContext, ArrayList<String> beerlistName, ArrayList<String> beerlistId, String beerId, String type) {
         this.mBeerlistName = beerlistName;
         this.mBeerlistId = beerlistId;
         this.beerId = beerId;
         this.mContext = mContext;
+        this.type = type;
     }
 
     @Override
@@ -66,13 +65,13 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
 
         holder.beerlist_name.setText(mBeerlistName.get(position));
 
+        if(type.equals("addbeerlist")){
+            holder.list_item_layout_beerlist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        holder.list_item_layout_beerlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String thisId = mBeerlistId.get(position);
-                addBeerToDrinklist(thisId);
+                    String thisId = mBeerlistId.get(position);
+                    addBeerToDrinklist(thisId);
 
                 /*
                 Intent intent1 = new Intent(mContext, BeerActivity.class);
@@ -80,8 +79,19 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
                 //intent1.putExtra("BEER_ID", beerId);
                 mContext.startActivities(new Intent[]{intent1});*/
 
-            }
-        });
+                }
+            });
+        }
+        else if(type.equals("userpage")){
+            holder.list_item_layout_beerlist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String thisId = mBeerlistId.get(position);
+                    Toast.makeText(mContext, "Beerlist #" + thisId, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
 
     }
 
@@ -110,7 +120,7 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
 
         ///addToDrinklist/{username}/{drinklistId}/{beerId}
         String url = ADD_TO_BEERLIST_URL +
-                LoginActivity.user + "/" +
+                UserActivity.user + "/" +
                 beerlistId + "/" +
                 beerId;
 

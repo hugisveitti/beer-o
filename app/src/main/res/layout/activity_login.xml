@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".UserActivity">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -19,7 +19,7 @@
         android:id="@+id/login_form"
         android:name="com.example.villi.beer_yo_ass.LoginFragment"
         android:layout_width="match_parent"
-        android:layout_height="456dp"
+        android:layout_height="676dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
