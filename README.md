@@ -1,4 +1,4 @@
-﻿# beer-o
+﻿# beer-yo-ass
 Verkefni hugbúnaðarverkefni 2 í HÍ
 
 ## Bjór umsagnasíða tengd við vínbúðina
