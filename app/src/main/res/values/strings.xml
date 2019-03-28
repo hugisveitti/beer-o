@@ -45,9 +45,9 @@
     <string name="alphabetical">Alphabetical</string>
     <string name="by_price">By price</string>
     <string name="by_alcohol">By alcohol</string>
-    <string name="Search_instructions">How do you want to filter results?</string>
-    <string name="price_under">Price under:</string>
-    <string name="price_over">Price over:</string>
+    <string name="Search_instructions">Filter Results</string>
+    <string name="price_under">to</string>
+    <string name="price_over">Price from:</string>
     <string name="search">Search</string>
     <string name="name" tools:ignore="ExtraTranslation">Name</string>
 

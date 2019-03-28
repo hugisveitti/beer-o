@@ -35,14 +35,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
+    private ArrayList<String> mbeer_alcohol = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> mbeer_id, ArrayList<String> mbeer_name, ArrayList<String> mbeer_volume, ArrayList<String> mbeer_price) {
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> mbeer_id, ArrayList<String> mbeer_name, ArrayList<String> mbeer_volume, ArrayList<String> mbeer_price, ArrayList<String> mbeer_alcohol) {
         this.mbeer_id = mbeer_id;
         this.mbeer_name = mbeer_name;
         this.mbeer_volume = mbeer_volume;
         this.mbeer_price = mbeer_price;
         this.mContext = mContext;
+        this.mbeer_alcohol = mbeer_alcohol;
     }
 
     @Override
@@ -69,6 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.beer_name.setText(mbeer_name.get(position));
         holder.beer_volume.setText(mbeer_volume.get(position));
         holder.beer_price.setText(mbeer_price.get(position));
+        holder.beer_alcohol.setText(mbeer_alcohol.get(position));
 
         holder.list_item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView beer_name;
         private TextView beer_volume;
         private TextView beer_price;
+        private TextView beer_alcohol;
         private RelativeLayout list_item_layout;
 
         public ViewHolder(View itemView) {
@@ -105,6 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             beer_name = itemView.findViewById(R.id.beer_name);
             beer_volume = itemView.findViewById(R.id.beer_volume);
             beer_price = itemView.findViewById(R.id.beer_price);
+            beer_alcohol = itemView.findViewById(R.id.beer_alcohol);
             list_item_layout = itemView.findViewById(R.id.list_item_layout);
         }
     }

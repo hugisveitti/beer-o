@@ -54,6 +54,7 @@ public class UserPageFragment extends Fragment {
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
+    private ArrayList<String> mbeer_alcohol = new ArrayList<>();
 
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String MY_BEERLISTS_URL = HOST_URL + "getMyDrinklists/";
@@ -186,6 +187,7 @@ public class UserPageFragment extends Fragment {
                 mbeer_name.add(mMybeers_data.get(i).get("name") + "");
                 mbeer_volume.add("Magn " + mMybeers_data.get(i).get("volume") + " ml.");
                 mbeer_price.add(mMybeers_data.get(i).get("price") + " kr.");
+                mbeer_alcohol.add(mMybeers_data.get(i).get("alcohol") + "%");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -198,7 +200,7 @@ public class UserPageFragment extends Fragment {
         recyclerViewMyBeerlists.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         RecyclerView recyclerViewMyBeers = view.findViewById(R.id.mybeersList);
-        RecyclerViewAdapter adapterBeers = new RecyclerViewAdapter(getActivity(), mbeer_id, mbeer_name, mbeer_volume, mbeer_price);
+        RecyclerViewAdapter adapterBeers = new RecyclerViewAdapter(getActivity(), mbeer_id, mbeer_name, mbeer_volume, mbeer_price, mbeer_alcohol);
         recyclerViewMyBeers.setAdapter(adapterBeers);
         recyclerViewMyBeers.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
