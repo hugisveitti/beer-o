@@ -19,7 +19,7 @@ public class UserActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private LoginFragment loginFragment;
-    public static String user = null;
+    public static String user = "villi";
     public UserPageFragment userPageFragment;
 
 

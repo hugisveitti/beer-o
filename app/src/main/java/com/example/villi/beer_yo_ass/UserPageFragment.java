@@ -193,7 +193,7 @@ public class UserPageFragment extends Fragment {
         String beerId = "";
         String type = "userpage";
         RecyclerView recyclerViewMyBeerlists = view.findViewById(R.id.mybeerlistsList);
-        RecyclerViewAdapterBeerlist adapterBeerlist = new RecyclerViewAdapterBeerlist(getActivity(), mBeerlistNames, mBeerlistIds, beerId, type);
+        RecyclerViewAdapterBeerlist adapterBeerlist = new RecyclerViewAdapterBeerlist(getActivity(), mBeerlistNames, mBeerlistIds, beerId, type, mBeerlist_data);
         recyclerViewMyBeerlists.setAdapter(adapterBeerlist);
         recyclerViewMyBeerlists.setLayoutManager(new LinearLayoutManager(getActivity()));
 

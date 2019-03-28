@@ -188,8 +188,9 @@ public class BeerlistPopup extends AppCompatActivity {
             e.printStackTrace();
         }
         String type = "addbeerlist";
+        ArrayList<JSONObject> mBeerlist_data = new ArrayList<JSONObject>();
         RecyclerView recyclerView = findViewById(R.id.beerlistRecyclerView);
-        RecyclerViewAdapterBeerlist adapter = new RecyclerViewAdapterBeerlist(this, mBeerlistNames, mBeerlistIds,beerId,type);
+        RecyclerViewAdapterBeerlist adapter = new RecyclerViewAdapterBeerlist(this, mBeerlistNames, mBeerlistIds,beerId,type,mBeerlist_data);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

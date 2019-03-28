@@ -10,6 +10,7 @@ package com.example.villi.beer_yo_ass;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerViewAdapterBeerlist.ViewHolder> {
@@ -35,18 +38,20 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
     private Context mContext;
     private ArrayList<String> mBeerlistName = new ArrayList<>();
     private ArrayList<String> mBeerlistId = new ArrayList<>();
+    private ArrayList<JSONObject> mBeerlist_data;
     private String beerId;
     private String type;
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String ADD_TO_BEERLIST_URL = HOST_URL + "addToDrinklist/";
 
 
-    public RecyclerViewAdapterBeerlist(Context mContext, ArrayList<String> beerlistName, ArrayList<String> beerlistId, String beerId, String type) {
+    public RecyclerViewAdapterBeerlist(Context mContext, ArrayList<String> beerlistName, ArrayList<String> beerlistId, String beerId, String type, ArrayList<JSONObject> mBeerlist_data) {
         this.mBeerlistName = beerlistName;
         this.mBeerlistId = beerlistId;
         this.beerId = beerId;
         this.mContext = mContext;
         this.type = type;
+        this.mBeerlist_data = mBeerlist_data;
     }
 
     @Override
@@ -88,7 +93,18 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
                 public void onClick(View view) {
                     String thisId = mBeerlistId.get(position);
                     Toast.makeText(mContext, "Beerlist #" + thisId, Toast.LENGTH_SHORT).show();
-                }
+
+                    ArrayList<String> mbeerlist_data_string = new ArrayList<String>();
+
+                    for(int i = 0; i < mBeerlist_data.size(); i++){
+                        mbeerlist_data_string.add(mBeerlist_data.get(i).toString());
+                    }
+                    System.out.println(mbeerlist_data_string.get(1));
+                    Intent intent1 = new Intent(mContext, BeerlistActivity.class);
+
+                    intent1.putStringArrayListExtra("BEERLIST_DATA", mbeerlist_data_string);
+                    intent1.putExtra("BEERLIST_ID", thisId);
+                    mContext.startActivities(new Intent[]{intent1});                }
             });
         }
 

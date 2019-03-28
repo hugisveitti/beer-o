@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme.PopupTheme">
         </activity>
         <activity android:name=".BeerActivity" />
+        <activity android:name=".BeerlistActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
