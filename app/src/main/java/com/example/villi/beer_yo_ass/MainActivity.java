@@ -97,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // The data is only loaded if the data array is empty
+        mbeer_data = BeerData.getBeer_data();
+        System.out.println("Wassupfool");
+        System.out.println(BeerData.getBeerListSize());
         if(mbeer_data.size() == 0){
-            //loadBeerData();
+            loadBeerData();
         }
 
 
@@ -121,10 +124,18 @@ public class MainActivity extends AppCompatActivity {
 
                             // add the beers to ArrayList of beer
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                mbeer_data.add(jsonArray.getJSONObject(i));
+                                BeerData.insertBeer(jsonArray.getJSONObject(i));
+//                                mbeer_data.add(jsonArray.getJSONObject(i));
+
                             }
+                            mbeer_data = BeerData.getBeer_data();
 
                             System.out.println(mbeer_data.get(0));
+                            BeerData.getBeer("0");
+                            System.out.println(BeerData.getBeerListSize());
+
+                            System.out.println("WHAT!");
+                            System.out.println(BeerData.getRandomBeer());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
