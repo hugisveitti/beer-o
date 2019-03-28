@@ -353,16 +353,18 @@ public class SearchActivity extends AppCompatActivity {
             public int compare(JSONObject a, JSONObject b) {
                 String valA = new String();
                 String valB = new String();
-
+                System.out.println("Keyname " + KEY_NAME);
                 try {
 
                    if(KEY_NAME.equals("price")){
+                       System.out.println("print");
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
                         //viljum skil í minnkandi röð hjá áfengisprósentu
                         return Integer.compare(Integer.parseInt(valA),Integer.parseInt(valB));
                     }
                     else if( KEY_NAME.equals("alcohol")){
+                       System.out.println("alcohol");
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
 
@@ -413,6 +415,8 @@ public class SearchActivity extends AppCompatActivity {
                 }
         }
         reloadView();
+        makeBeerList();
+        searchRecyclerView();
     }
 
     private void reloadView() throws JSONException {
@@ -422,8 +426,10 @@ public class SearchActivity extends AppCompatActivity {
         mbeer_price = new ArrayList<>();
         mbeer_alcohol = new ArrayList<>();
 
-        searchRecyclerView();
-        makeBeerList();
+
+//        makeBeerList();
+//        searchRecyclerView();
+
     }
 
     private boolean isEmpty(EditText etText) {
@@ -477,5 +483,8 @@ public class SearchActivity extends AppCompatActivity {
             mUnderPrice = Integer.valueOf(mUnder_price.getText().toString().trim());
         }
         reloadView();
+
+        searchRecyclerView();
+        makeBeerList();
     }
 }
