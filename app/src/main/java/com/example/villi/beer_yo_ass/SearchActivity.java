@@ -18,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +58,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<String> mbeer_name = new ArrayList<>();
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
+    private ArrayList<String> mbeer_alcohol = new ArrayList<>();
 
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private ArrayList<JSONObject> mSorted_data;
@@ -74,6 +77,9 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        mSearch_string = (EditText) findViewById(R.id.search_name);
+        mOver_price = (EditText) findViewById(R.id.price_over_input);
+        mUnder_price = (EditText) findViewById(R.id.price_under_input);
 
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -109,7 +115,72 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        mSearch_string.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try{
+                    filterResults();
+                } catch(Exception e){
+                    System.out.println(e);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        mOver_price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try{
+                    filterResults();
+                } catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        mUnder_price.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try{
+                    filterResults();
+                } catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     //Make request on server and put response of all beers in mbeer_data
@@ -168,6 +239,8 @@ public class SearchActivity extends AppCompatActivity {
                         loadDataToSort();
                     }
                 }
+            } else {
+                loadDataToSort();
             }
 
 
@@ -201,6 +274,7 @@ public class SearchActivity extends AppCompatActivity {
                 mbeer_name.add(mSorted_data.get(i).get("name") + "");
                 mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
                 mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
+                mbeer_alcohol.add(mSorted_data.get(i).get("alcohol") + "%");
             }
 
         } catch (JSONException e) {
@@ -208,7 +282,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price, mbeer_alcohol);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -248,6 +322,7 @@ public class SearchActivity extends AppCompatActivity {
                     mbeer_name.add(mSorted_data.get(i).get("name") + "");
                     mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
                     mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
+                    mbeer_alcohol.add(mSorted_data.get(i).get("alcohol") + "%");
                 }
             }
 
@@ -256,7 +331,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mbeer_id, mbeer_name, mbeer_volume, mbeer_price, mbeer_alcohol);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -264,7 +339,7 @@ public class SearchActivity extends AppCompatActivity {
     //Take in JSONArray and sort it with regards to a KEY, here the variable msortBy
     //msortBy is changed with radio buttons
     private JSONArray sortList(JSONArray jsonArr) throws JSONException {
-
+        System.out.println("msortBy"+msortBy);
         JSONArray sortedJsonArray = new JSONArray();
 
         List<JSONObject> jsonValues = new ArrayList<JSONObject>();
@@ -281,13 +356,22 @@ public class SearchActivity extends AppCompatActivity {
                 String valB = new String();
 
                 try {
-                    if(msortBy != "name"){
+
+                   if(KEY_NAME.equals("price")){
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
+                        //viljum skil í minnkandi röð hjá áfengisprósentu
+                        return Integer.compare(Integer.parseInt(valA),Integer.parseInt(valB));
                     }
-                    else{
-                        valA = (String) a.get(KEY_NAME);
-                        valB = (String) b.get(KEY_NAME);
+                    else if( KEY_NAME.equals("alcohol")){
+                        valA = (String) String.valueOf(a.get(KEY_NAME));
+                        valB = (String) String.valueOf(b.get(KEY_NAME));
+
+                        return -Double.compare(Double.parseDouble(valA),Double.parseDouble(valB));
+                    } else {
+                        valA = (String) String.valueOf(a.get(KEY_NAME));
+                        valB = (String) String.valueOf(b.get(KEY_NAME));
+//
                     }
                 }
                 catch (JSONException e) {
@@ -316,22 +400,20 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.by_alphabetical:
                 if (checked) {
                     msortBy = "name";
-                    reloadView();
                     break;
                 }
             case R.id.by_alcohol:
                 if (checked){
                     msortBy = "alcohol";
-                    reloadView();
                     break;
                 }
             case R.id.by_price:
                 if (checked) {
                     msortBy = "price";
-                    reloadView();
                     break;
                 }
         }
+        reloadView();
     }
 
     private void reloadView() throws JSONException {
@@ -339,8 +421,10 @@ public class SearchActivity extends AppCompatActivity {
         mbeer_name = new ArrayList<>();
         mbeer_volume = new ArrayList<>();
         mbeer_price = new ArrayList<>();
-        makeBeerList();
+        mbeer_alcohol = new ArrayList<>();
+
         searchRecyclerView();
+        makeBeerList();
     }
 
     private boolean isEmpty(EditText etText) {
@@ -352,9 +436,29 @@ public class SearchActivity extends AppCompatActivity {
 
     //Take all filter inputs and process to get results
     public void onSearchButtonClicked(View view) throws JSONException {
-        mSearch_string = (EditText) findViewById(R.id.search_name);
-        mOver_price = (EditText) findViewById(R.id.price_over_input);
-        mUnder_price = (EditText) findViewById(R.id.price_under_input);
+
+        if(isEmpty(mSearch_string)){
+            mSearchName = "";
+        }
+        else{
+            mSearchName = mSearch_string.getText().toString().trim();
+        }
+        if(isEmpty(mOver_price)){
+            mOverPrice = -1;
+        }
+        else{
+            mOverPrice = Integer.valueOf(mOver_price.getText().toString().trim());
+        }
+        if(isEmpty(mUnder_price)){
+            mUnderPrice = -1;
+        }
+        else{
+            mUnderPrice = Integer.valueOf(mUnder_price.getText().toString().trim());
+        }
+        reloadView();
+    }
+
+    private void filterResults() throws JSONException{
         if(isEmpty(mSearch_string)){
             mSearchName = "";
         }
