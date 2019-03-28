@@ -339,7 +339,6 @@ public class SearchActivity extends AppCompatActivity {
     //Take in JSONArray and sort it with regards to a KEY, here the variable msortBy
     //msortBy is changed with radio buttons
     private JSONArray sortList(JSONArray jsonArr) throws JSONException {
-        System.out.println("msortBy"+msortBy);
         JSONArray sortedJsonArray = new JSONArray();
 
         List<JSONObject> jsonValues = new ArrayList<JSONObject>();
