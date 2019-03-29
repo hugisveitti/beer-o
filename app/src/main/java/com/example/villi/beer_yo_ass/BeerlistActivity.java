@@ -59,42 +59,36 @@ public class BeerlistActivity extends AppCompatActivity {
 
     //URL and Request parameters
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
-    private static final String HOST_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
-    private static String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
-    private static String COMMENT_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/comment/";
-    private static String MY_BEERS_URL = HOST_URL + "addToMyBeers/";
+    private static final String MY_BEERLISTS_URL = HOST_URL + "getMyDrinklists/";
 
-    //beerdata variables
-    private String name;
-    private String stars;
-    private String alcohol;
-    private String volume;
-    private String linkToVinbudin;
-    private String taste;
-    private String price;
-    private String beerId;
-    private ArrayList<String> mbeerlist_string_data;
-    // variables for the json data
-    private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
-    private ArrayList<String> commenter_name = new ArrayList<>();
-    private ArrayList<String> comment = new ArrayList<>();
-    private ArrayList<String> commenter_id = new ArrayList<>();
-    private ArrayList<String> comment_time = new ArrayList<>();
-    private ArrayList<String> comment_title = new ArrayList<>();
-    private ArrayList<JSONObject> comment_data = new ArrayList<>();
+
+    private ArrayList<String> mbeer_id_unchecked = new ArrayList<>();
+    private ArrayList<String> mbeer_name_unchecked  = new ArrayList<>();
+    private ArrayList<String> mbeer_volume_unchecked  = new ArrayList<>();
+    private ArrayList<String> mbeer_price_unchecked  = new ArrayList<>();
+    private ArrayList<String> mbeer_alcohol_unchecked  = new ArrayList<>();
+
+    private ArrayList<String> mbeer_id_checked = new ArrayList<>();
+    private ArrayList<String> mbeer_name_checked  = new ArrayList<>();
+    private ArrayList<String> mbeer_volume_checked  = new ArrayList<>();
+    private ArrayList<String> mbeer_price_checked  = new ArrayList<>();
+    private ArrayList<String> mbeer_alcohol_checked  = new ArrayList<>();
 
     private Boolean isLiked = null;
-    private String beerlistID;
+    private String beerlistId;
+    private String beerlistName;
+    private ArrayList<JSONObject> mUncheckedData = new ArrayList<>();
+    private ArrayList<JSONObject> mCheckedData = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beerlist);
 
         ArrayList<JSONObject> beerlist_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEERLIST_DATA");
-        beerlistID = (String) getIntent().getStringExtra("BEERLIST_ID");
-        System.out.println(String.valueOf(beerlist_list.get(1)));
-        URL_DATA = HOST_URL_DATA + "/" + beerId;
-
+        beerlistId = (String) getIntent().getStringExtra("BEERLIST_ID");
+        loadBeerlistData();
     }
 
     @Override
@@ -108,27 +102,92 @@ public class BeerlistActivity extends AppCompatActivity {
         }
     }
 
-/*
+    private void loadBeerlistData() {
+        String url = MY_BEERLISTS_URL + UserActivity.user;
+
+        final ProgressDialog progressDialog = new ProgressDialog(BeerlistActivity.this);
+        progressDialog.setMessage("Getting your beerlist...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            JSONArray mUnchecked = new JSONArray();
+                            JSONArray mChecked = new JSONArray();
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                if(String.valueOf(jsonArray.getJSONObject(i).get("drinklistId")).equals(beerlistId)){
+                                    beerlistName = jsonArray.getJSONObject(i).getString("name");
+                                    JSONObject getObject = jsonArray.getJSONObject(i);
+                                    mUnchecked = getObject.getJSONArray("uncheckedBeers");
+                                    mChecked = getObject.getJSONArray("checkedBeers");
+                                }
+                            }
+
+                            for(int i = 0; i < mUnchecked.length(); i++)
+                            {
+                                mUncheckedData.add(mUnchecked.getJSONObject(i));
+                            }
+
+                            for(int i = 0; i < mChecked.length(); i++)
+                            {
+                                mCheckedData.add(mChecked.getJSONObject(i));
+                            }
+                            initRecyclerView();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(BeerlistActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(BeerlistActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
     //Load comments in a recycle view
-    private void initRecyclerView(ArrayList<JSONObject> comment_data) {
+    private void initRecyclerView() throws JSONException {
 
         try {
-            for (int i = 0; i < comment_data.size(); i++) {
-                commenter_name.add(comment_data.get(i).get("username") + "");
-                comment.add(comment_data.get(i).get("comment") + "");
-                commenter_id.add(comment_data.get(i).get("userId") + "");
-                comment_time.add(comment_data.get(i).get("date") + "");
-                comment_title.add(comment_data.get(i).get("title") + "");
+            ArrayList<Boolean> checked = new ArrayList<>();
+            for (int i = 0; i < mUncheckedData.size(); i++) {
+                mbeer_id_unchecked.add(mUncheckedData.get(i).get("beerId") + "");
+                mbeer_name_unchecked.add(mUncheckedData.get(i).get("name") + "");
+                mbeer_volume_unchecked.add("Magn " + mUncheckedData.get(i).get("volume") + " ml.");
+                mbeer_price_unchecked.add(mUncheckedData.get(i).get("price") + " kr.");
+                mbeer_alcohol_unchecked.add(mUncheckedData.get(i).get("alcohol") + "%");
+                checked.add(false);
+            }
+
+            for (int i = 0; i < mCheckedData.size(); i++) {
+                mbeer_id_checked.add(mCheckedData.get(i).get("beerId") + "");
+                mbeer_name_checked.add(mCheckedData.get(i).get("name") + "");
+                mbeer_volume_checked.add("Magn " + mCheckedData.get(i).get("volume") + " ml.");
+                mbeer_price_checked.add(mCheckedData.get(i).get("price") + " kr.");
+                mbeer_alcohol_checked.add(mCheckedData.get(i).get("alcohol") + "%");
+                checked.add(true);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapterComments adapter = new RecyclerViewAdapterComments(this, commenter_id, commenter_name, comment, comment_time, comment_title);
+        RecyclerView recyclerView = findViewById(R.id.beerlistBeers);
+        RecyclerViewAdapterBeerlistPage adapter = new RecyclerViewAdapterBeerlistPage(this, mUncheckedData, mCheckedData, beerlistId);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }*/
+    }
 
 }

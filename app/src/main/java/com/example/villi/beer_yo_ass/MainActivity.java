@@ -130,12 +130,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             mbeer_data = BeerData.getBeer_data();
 
-                            System.out.println(mbeer_data.get(0));
                             BeerData.getBeer("0");
-                            System.out.println(BeerData.getBeerListSize());
-
-                            System.out.println("WHAT!");
-                            System.out.println(BeerData.getRandomBeer());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
