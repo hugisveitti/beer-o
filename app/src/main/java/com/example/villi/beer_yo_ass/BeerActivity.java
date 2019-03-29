@@ -383,17 +383,20 @@ public class BeerActivity extends AppCompatActivity {
                             name = object.getString("name");
                             mViewName = findViewById(R.id.beerName);
                             mViewName.setText(name);
-                            System.out.println(name);
 
                             stars = object.getString("stars");
                             mViewStars = findViewById(R.id.beerStars);
-                            mViewStars.setText("Rating: " + stars + "/5");
-                            System.out.println(stars);
+                            if(Double.parseDouble(stars) < 0){
+                                mViewStars.setText("Beer not yet rated");
+                            }
+                            else{
+                                mViewStars.setText("Rating: " + stars + "/5");
+                            }
+
 
                             alcohol = object.getString("alcohol");
                             mViewAlcohol = findViewById(R.id.beerAlcohol);
                             mViewAlcohol.setText("Alcohol: " + alcohol + "%");
-                            System.out.println(alcohol);
 
                             volume = object.getString("volume");
                             mViewVolume = findViewById(R.id.beerVolume);
@@ -411,7 +414,7 @@ public class BeerActivity extends AppCompatActivity {
 
                             //beerId = object.getString("beerId");
                             mViewImage = findViewById(R.id.beerImage);
-                            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+beerId+"_r.jpg").into(mViewImage);
+                            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+beerId+"_r.jpg").placeholder(R.drawable.logo).into(mViewImage);
 
 
                             JSONArray comment_list = object.getJSONArray("comments");

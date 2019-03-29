@@ -62,10 +62,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final String beerId;
         if (mbeer_id.get(position).length() == 4) {
             beerId = "0"+mbeer_id.get(position);
-            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/0"+mbeer_id.get(position)+"_r.jpg").placeholder(R.drawable.logo).into(holder.beer_image);
         } else {
             beerId = "" + mbeer_id.get(position);
-            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_id.get(position)+"_r.jpg").into(holder.beer_image);
+            Picasso.get().load("https://www.vinbudin.is/Portaldata/1/Resources/vorumyndir/medium/"+mbeer_id.get(position)+"_r.jpg").placeholder(R.drawable.logo).into(holder.beer_image);
         }
 
         holder.beer_name.setText(mbeer_name.get(position));

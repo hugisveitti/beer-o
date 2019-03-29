@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/beer_volume"
-            android:layout_width="100dp"
+            android:layout_width="117dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="60dp"
@@ -43,15 +43,15 @@
             android:id="@+id/beer_price"
             android:layout_width="80dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="255dp"
+            android:layout_marginLeft="260dp"
             android:layout_marginTop="60dp"
             android:text="Verð" />
 
         <TextView
             android:id="@+id/beer_alcohol"
-            android:layout_width="80dp"
+            android:layout_width="40dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="205dp"
+            android:layout_marginLeft="220dp"
             android:layout_marginTop="60dp"
             android:text="Alcohol" />
 
