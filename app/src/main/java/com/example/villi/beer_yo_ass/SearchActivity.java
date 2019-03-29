@@ -91,7 +91,7 @@ public class SearchActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        //initRecyclerView();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -263,7 +263,8 @@ public class SearchActivity extends AppCompatActivity {
         for(int i = 0; i < sortedJsonArray.length(); i++){
             mSorted_data.add(new JSONObject(String.valueOf(sortedJsonArray.get(i))));
         }
-        initRecyclerView();
+        //initRecyclerView();
+        searchRecyclerView();
     }
     //Load every beer in mbeerdata in RecycleView list of beers
     private void initRecyclerView() {
@@ -353,18 +354,18 @@ public class SearchActivity extends AppCompatActivity {
             public int compare(JSONObject a, JSONObject b) {
                 String valA = new String();
                 String valB = new String();
-                System.out.println("Keyname " + KEY_NAME);
+                //System.out.println("Keyname " + KEY_NAME);
                 try {
 
                    if(KEY_NAME.equals("price")){
-                       System.out.println("print");
+                       //System.out.println("print");
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
                         //viljum skil í minnkandi röð hjá áfengisprósentu
                         return Integer.compare(Integer.parseInt(valA),Integer.parseInt(valB));
                     }
                     else if( KEY_NAME.equals("alcohol")){
-                       System.out.println("alcohol");
+                       //System.out.println("alcohol");
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
 
@@ -415,8 +416,8 @@ public class SearchActivity extends AppCompatActivity {
                 }
         }
         reloadView();
-        makeBeerList();
-        searchRecyclerView();
+        //makeBeerList();
+        //searchRecyclerView();
     }
 
     private void reloadView() throws JSONException {
@@ -427,8 +428,8 @@ public class SearchActivity extends AppCompatActivity {
         mbeer_alcohol = new ArrayList<>();
 
 
-//        makeBeerList();
-//        searchRecyclerView();
+        makeBeerList();
+        //searchRecyclerView();
 
     }
 
@@ -471,20 +472,20 @@ public class SearchActivity extends AppCompatActivity {
             mSearchName = mSearch_string.getText().toString().trim();
         }
         if(isEmpty(mOver_price)){
-            mOverPrice = -1;
+            mOverPrice = 0;
         }
         else{
             mOverPrice = Integer.valueOf(mOver_price.getText().toString().trim());
         }
         if(isEmpty(mUnder_price)){
-            mUnderPrice = -1;
+            mUnderPrice = Integer.MAX_VALUE;
         }
         else{
             mUnderPrice = Integer.valueOf(mUnder_price.getText().toString().trim());
         }
         reloadView();
 
-        searchRecyclerView();
-        makeBeerList();
+        //searchRecyclerView();
+        //makeBeerList();
     }
 }

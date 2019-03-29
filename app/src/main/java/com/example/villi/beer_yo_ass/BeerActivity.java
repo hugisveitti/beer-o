@@ -447,11 +447,17 @@ public class BeerActivity extends AppCompatActivity {
 
         try {
             for (int i = 0; i < comment_data.size(); i++) {
-                commenter_name.add(comment_data.get(i).get("username") + "");
-                comment.add(comment_data.get(i).get("comment") + "");
-                commenter_id.add(comment_data.get(i).get("userId") + "");
-                comment_time.add(comment_data.get(i).get("date") + "");
-                comment_title.add(comment_data.get(i).get("title") + "");
+                //ratings búa til null comment
+                if(!comment_data.get(i).isNull("title")){
+                    commenter_name.add(comment_data.get(i).get("username") + "");
+                    comment.add(comment_data.get(i).get("comment") + "");
+                    commenter_id.add(comment_data.get(i).get("userId") + "");
+                    comment_time.add(comment_data.get(i).get("date") + "");
+                    comment_title.add(comment_data.get(i).get("title") + "");
+                    commenter_id.add(comment_data.get(i).get("userId") + "");
+                    comment_time.add(comment_data.get(i).get("date") + "");
+                    comment_title.add(comment_data.get(i).get("title") + "");
+                }
             }
 
         } catch (JSONException e) {

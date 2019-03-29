@@ -65,13 +65,12 @@ public class RatingPopup extends AppCompatActivity {
     }
 
     private void sendRating(float rating) {
+        ///rate/{username}/{beerId}/{stars}
         if(UserActivity.user != null){
             String url = HOST_URL +
-                    "comment/" +
+                    "rate/" +
                     UserActivity.user + "/" +
                     beerId + "/" +
-                    "rating/" +
-                    "RatingComment/" +
                     rating;
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
