@@ -115,7 +115,7 @@ public class LoginFragment extends Fragment {
                                 fragmentManager.popBackStackImmediate();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.login_form, userPageFragment)
-                                        .addToBackStack(null)
+//                                        .addToBackStack(null)
                                         .commit();
                             } else {
                                 Toast.makeText(getActivity(), "vitlaust notenda nafn eða lykilorð", Toast.LENGTH_SHORT).show();

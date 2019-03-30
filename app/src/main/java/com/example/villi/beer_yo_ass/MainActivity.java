@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
 
-                        //intent1.putStringArrayListExtra("BEER_DATA", mbeer_data_string);
                         startActivity(intent1);
                         break;
 
@@ -100,55 +99,11 @@ public class MainActivity extends AppCompatActivity {
         mbeer_data = BeerData.getBeer_data();
         System.out.println("Wassupfool");
         System.out.println(BeerData.getBeerListSize());
+
         if(mbeer_data.size() == 0){
-            loadBeerData();
+            mbeer_data = BeerData.loadBeerData(this);
         }
 
-
     }
 
-    // This function is called to load the data
-    private void loadBeerData() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                URL_DATA,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-
-                            // add the beers to ArrayList of beer
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                BeerData.insertBeer(jsonArray.getJSONObject(i));
-//                                mbeer_data.add(jsonArray.getJSONObject(i));
-
-                            }
-                            mbeer_data = BeerData.getBeer_data();
-
-                            BeerData.getBeer("0");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        System.out.println("Error response");
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-        // The Volley package is used to make a request on the database
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
 }

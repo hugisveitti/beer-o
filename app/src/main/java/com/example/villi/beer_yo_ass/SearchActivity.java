@@ -228,18 +228,33 @@ public class SearchActivity extends AppCompatActivity {
         System.out.println("Search that shit cuz");
 
         try {
+            mbeer_data = BeerData.getBeer_data();
             if(mbeer_data.size() == 0){
-                ArrayList<JSONObject> beer_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEER_DATA");
-                if(beer_list == null){
-                    loadBeerData();
-                }
-                else {
-                    for (int i = 0; i < beer_list.size(); i++) {
-                        mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
-                        loadDataToSort();
-                    }
-                }
+//                ArrayList<JSONObject> beer_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEER_DATA");
+
+                mbeer_data = BeerData.loadBeerData(this);
+
+                System.out.println(mbeer_data.size());
+                System.out.println(BeerData.getBeerListSize());
+
+                loadDataToSort();
+
+
+//                if(beer_list == null){
+//                    System.out.println("hingað??? whi not fam!!");
+////                    loadBeerData();
+//                }
+//                else {
+//                    System.out.println("Þá væntanlega hingað líka?");
+//                    for (int i = 0; i < beer_list.size(); i++) {
+////                        mbeer_data.add(new JSONObject(String.valueOf(beer_list.get(i))));
+//                        loadDataToSort();
+//                    }
+//                    loadDataToSort();
+//
+//                }
             } else {
+                System.out.println("VAR TIL NÚÞEGAR!!");
                 loadDataToSort();
             }
 
