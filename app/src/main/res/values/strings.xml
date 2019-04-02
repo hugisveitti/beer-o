@@ -60,6 +60,7 @@
     <string name="addingToFav">Adding beer to favorites</string>
     <string name="title_activity_rating_popup">RatingPopup</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_reflex">ReflexActivity</string>
 
 
 </resources>

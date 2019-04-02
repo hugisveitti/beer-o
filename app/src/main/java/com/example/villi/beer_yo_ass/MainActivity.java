@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
     private TextView mUser_textview;
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
-
+    private Button reflexButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
         mUser_textview = findViewById(R.id.user_textview);
+        reflexButton = findViewById(R.id.reflexButton);
 
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -63,7 +66,15 @@ public class MainActivity extends AppCompatActivity {
             mUser_textview.setText("Velkominn " + UserActivity.user);
         }
 
+        reflexButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ReflexActivity.class);
+                startActivity(intent);
 
+
+            }
+        });
         // Navigation bar to change activities
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
