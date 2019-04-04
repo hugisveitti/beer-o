@@ -6,4 +6,5 @@
     <color name="errorRed">#F50000</color>
     <color name="black">#000000</color>
     <color name="buttonYellow">#8BC34A</color>
+    <color name="buttonRed">#C3544A</color>
 </resources>

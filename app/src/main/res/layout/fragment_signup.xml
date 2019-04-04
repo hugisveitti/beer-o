@@ -39,7 +39,8 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="80dp"
         android:layout_marginVertical="412dp"
-        android:text="@string/button_signup" />
+        android:text="@string/button_signup"
+        android:background="@color/colorPrimaryDark"/>
 
 
     <TextView
