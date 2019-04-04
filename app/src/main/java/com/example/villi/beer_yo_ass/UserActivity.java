@@ -30,9 +30,6 @@ public class UserActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
-
-
-
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
@@ -56,6 +53,7 @@ public class UserActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_home:
                         Intent intent1 = new Intent(UserActivity.this, MainActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
 

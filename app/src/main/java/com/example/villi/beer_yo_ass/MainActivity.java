@@ -85,14 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_search:
-                        ArrayList<String> mbeer_data_string = new ArrayList<String>();
-
-                        for(int i = 0; i < mbeer_data.size(); i++){
-                            mbeer_data_string.add(mbeer_data.get(i).toString());
-                        }
-
                         Intent intent1 = new Intent(MainActivity.this, SearchActivity.class);
-
                         startActivity(intent1);
                         break;
 

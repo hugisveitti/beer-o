@@ -109,7 +109,7 @@ public class BeerActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_home:
                         Intent intent1 = new Intent(BeerActivity.this, MainActivity.class);
-                        intent1.putExtra("EXTRA_VALUE", "bitch ass");
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
 

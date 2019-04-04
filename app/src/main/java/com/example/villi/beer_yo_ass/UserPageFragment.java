@@ -82,11 +82,17 @@ public class UserPageFragment extends Fragment {
 
         mWelcomeMessage.setText("Hello my friend " + UserActivity.user);
 
+        String s = getString(R.string.nav_my_page);
+        System.out.println("______________USERPAGE_______________");
+        System.out.println(s);
+        System.out.println("________________________________");
+
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UserActivity.user = null;
                 Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
         });
