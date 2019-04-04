@@ -54,10 +54,7 @@ public class LoginFragment extends Fragment {
         button_login = view.findViewById(R.id.button_login);
         no_account = view.findViewById(R.id.no_account);
 
-        String s = getString(R.string.nav_my_page);
-        System.out.println("_________________LOGIN_______________");
-        System.out.println(s);
-        System.out.println("________________________________");
+        UserActivity.setMenuItemText(2, getResources().getString(R.string.nav_login));
 
         // Switch to the signup fragment
         no_account.setOnClickListener(new View.OnClickListener() {

@@ -86,6 +86,13 @@ public class SearchActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
+        MenuItem menuItem2 = menu.getItem(2);
+        if (UserActivity.user == null) {
+            menuItem2.setTitle(getResources().getString(R.string.nav_login));
+        } else {
+            menuItem2.setTitle(getResources().getString(R.string.nav_my_page));
+        }
+
         //load data into mbeer_data and process it
         try {
             makeBeerList();

@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 public class UserActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigation;
+    private static BottomNavigationView bottomNavigation;
     private LoginFragment loginFragment;
     public static String user = "villi";
     public UserPageFragment userPageFragment;
@@ -89,5 +89,9 @@ public class UserActivity extends AppCompatActivity {
                 .commit();
     }
 
-
+    public static void setMenuItemText(int item, String s) {
+        Menu menu = bottomNavigation.getMenu();
+        MenuItem menuItem = menu.getItem(item);
+        menuItem.setTitle(s);
+    }
 }

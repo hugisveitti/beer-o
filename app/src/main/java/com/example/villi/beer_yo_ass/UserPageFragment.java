@@ -9,10 +9,13 @@ package com.example.villi.beer_yo_ass;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -82,10 +85,7 @@ public class UserPageFragment extends Fragment {
 
         mWelcomeMessage.setText("Hello my friend " + UserActivity.user);
 
-        String s = getString(R.string.nav_my_page);
-        System.out.println("______________USERPAGE_______________");
-        System.out.println(s);
-        System.out.println("________________________________");
+        UserActivity.setMenuItemText(2, getResources().getString(R.string.nav_my_page));
 
         mLogOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
