@@ -41,9 +41,9 @@
         android:layout_height="34dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="84dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="82dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="@string/name" />
 
@@ -64,9 +64,10 @@
         android:layout_below="@+id/beerName"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="84dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="82dp"
         android:layout_toEndOf="@+id/beerImage"
+        android:gravity="center_vertical"
         android:text="@string/stars" />
 
     <TextView
@@ -93,15 +94,15 @@
 
     <TextView
         android:id="@+id/beerTaste"
-        android:layout_width="112dp"
-        android:layout_height="41dp"
-        android:layout_below="@+id/beerStars"
+        android:layout_width="115dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="542dp"
+        android:layout_marginTop="149dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="535dp"
         android:layout_toEndOf="@+id/beerImage"
         android:text="@string/taste" />
 
@@ -167,5 +168,17 @@
         android:layout_marginEnd="25dp"
         android:background="@null"
         app:srcCompat="@android:drawable/btn_star" />
+
+    <TextView
+        android:id="@+id/myStars"
+        android:layout_width="115dp"
+        android:layout_height="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="82dp"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@+id/beerImage" />
 
 </RelativeLayout>

@@ -50,6 +50,7 @@ public class BeerActivity extends AppCompatActivity {
     private TextView mViewPrice;
     private TextView mViewTate;
     private TextView mViewStars;
+    private TextView mMyStars;
     private ImageView mViewImage;
     private EditText mCommentText;
     private Button mCommentButton;
@@ -63,6 +64,7 @@ public class BeerActivity extends AppCompatActivity {
     private static String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/beers";
     private static String COMMENT_URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/comment/";
     private static String MY_BEERS_URL = HOST_URL + "addToMyBeers/";
+    private static String REMOVE_MY_BEERS_URL = HOST_URL + "removeFromMyBeers/";
 
     //beerdata variables
     private String name;
@@ -133,12 +135,14 @@ public class BeerActivity extends AppCompatActivity {
         mHeartButton = (ImageButton) findViewById(R.id.heartButton);
         mBeerlistButton = (ImageButton) findViewById(R.id.beerlistButton);
         mRatingButton = (ImageButton) findViewById(R.id.ratingButton);
+        mMyStars = (TextView) findViewById(R.id.myStars);
         if(UserActivity.user == null){
             mCommentText.setVisibility(View.GONE);
             mCommentButton.setVisibility(View.GONE);
             mHeartButton.setVisibility(View.GONE);
             mBeerlistButton.setVisibility(View.GONE);
             mRatingButton.setVisibility(View.GONE);
+            mMyStars.setVisibility(View.GONE);
         }
         else{
             initHeart();
@@ -147,7 +151,6 @@ public class BeerActivity extends AppCompatActivity {
             mCommentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(BeerActivity.this, "CommentPosted", Toast.LENGTH_SHORT).show();
                     if(!isEmpty(mCommentText)){
                         String comment = mCommentText.getText().toString().trim();
                         postComment(comment);
@@ -260,12 +263,26 @@ public class BeerActivity extends AppCompatActivity {
     }
 
     private void openRatings() {
+        String commentId = null;
+        try {
+            for (int i = 0; i < comment_data.size(); i++) {
+                //ratings búa til null comment
+                if(!comment_data.get(i).isNull("title")){
+                    if((comment_data.get(i).get("userame") + "").equals(UserActivity.user)){
+                        commentId = String.valueOf(comment_data.get(i).get("commentId"));
+                    }
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Intent intent1 = new Intent(BeerActivity.this, RatingPopup.class);
 
         intent1.putExtra("BEER_ID", String.valueOf(beerId));
+        intent1.putExtra("EXIST_RATING", commentId);
         startActivityForResult(intent1, 101);
-        //startActivity(intent1);
     }
 
     private void likeBeer() {
@@ -299,8 +316,35 @@ public class BeerActivity extends AppCompatActivity {
     }
 
     private void dislikeBeer() {
-        //TODO
+        String url = REMOVE_MY_BEERS_URL +
+                UserActivity.user + "/" +
+                beerId;
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.addingToFav));
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        toggleLike();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(BeerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
+
     private void toggleLike(){
         if(isLiked == false){
             mHeartButton.setImageResource(R.drawable.red_heart);
@@ -346,7 +390,7 @@ public class BeerActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-
+                        Toast.makeText(BeerActivity.this, "CommentPosted", Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(getIntent());
                     }
@@ -453,6 +497,12 @@ public class BeerActivity extends AppCompatActivity {
                     commenter_id.add(comment_data.get(i).get("userId") + "");
                     comment_time.add(comment_data.get(i).get("date") + "");
                     comment_title.add(comment_data.get(i).get("title") + "");
+                }
+                else{
+                    if((comment_data.get(i).get("username") + "").equals(UserActivity.user)){
+                        String stars = String.valueOf(comment_data.get(i).get("stars"));
+                        mMyStars.setText("My grade: " + stars);
+                    }
                 }
             }
 

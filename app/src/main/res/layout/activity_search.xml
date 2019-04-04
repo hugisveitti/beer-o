@@ -37,6 +37,13 @@
             android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked"
             android:text="@string/by_alcohol" />
+
+        <RadioButton
+            android:id="@+id/by_book"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:onClick="onRadioButtonClicked"
+            android:text="By the Book" />
     </RadioGroup>
 
     <android.support.design.widget.BottomNavigationView

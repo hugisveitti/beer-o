@@ -100,5 +100,11 @@ public class BeerData {
         return mbeer_data;
     }
 
+    public static void setBeerData(Context context, JSONArray jsonArray) throws JSONException {
+        mbeer_data = new ArrayList<>();
 
+        for (int i = 0; i < jsonArray.length(); i++) {
+            mbeer_data.add(jsonArray.getJSONObject(i));
+        }
+    }
 }

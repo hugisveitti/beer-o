@@ -59,6 +59,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
     private ArrayList<String> mbeer_alcohol = new ArrayList<>();
+    private ArrayList<String> mbeer_books = new ArrayList<>();
 
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private ArrayList<JSONObject> mSorted_data;
@@ -292,6 +293,7 @@ public class SearchActivity extends AppCompatActivity {
                 mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
                 mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
                 mbeer_alcohol.add(mSorted_data.get(i).get("alcohol") + "%");
+                mbeer_books.add(mSorted_data.get(i).get("booksRating") + "%");
             }
 
         } catch (JSONException e) {
@@ -340,6 +342,7 @@ public class SearchActivity extends AppCompatActivity {
                     mbeer_volume.add("Magn " + mSorted_data.get(i).get("volume") + " ml.");
                     mbeer_price.add(mSorted_data.get(i).get("price") + " kr.");
                     mbeer_alcohol.add(mSorted_data.get(i).get("alcohol") + "%");
+                    mbeer_books.add(mSorted_data.get(i).get("booksRating") + "");
                 }
             }
 
@@ -380,7 +383,7 @@ public class SearchActivity extends AppCompatActivity {
                         //viljum skil í minnkandi röð hjá áfengisprósentu
                         return Integer.compare(Integer.parseInt(valA),Integer.parseInt(valB));
                     }
-                    else if( KEY_NAME.equals("alcohol")){
+                    else if( KEY_NAME.equals("alcohol") || KEY_NAME.equals("booksRating")){
                        //System.out.println("alcohol");
                         valA = (String) String.valueOf(a.get(KEY_NAME));
                         valB = (String) String.valueOf(b.get(KEY_NAME));
@@ -428,6 +431,11 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.by_price:
                 if (checked) {
                     msortBy = "price";
+                    break;
+                }
+            case R.id.by_book:
+                if (checked) {
+                    msortBy = "booksRating";
                     break;
                 }
         }

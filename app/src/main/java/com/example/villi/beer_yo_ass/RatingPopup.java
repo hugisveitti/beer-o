@@ -19,6 +19,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 
 public class RatingPopup extends AppCompatActivity {
 
@@ -27,6 +30,7 @@ public class RatingPopup extends AppCompatActivity {
     private TextView mMessage;
 
     private String beerId;
+    private String existingComment;
 
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
 
@@ -37,7 +41,7 @@ public class RatingPopup extends AppCompatActivity {
 
         Bundle p = getIntent().getExtras();
         beerId = p.getString("BEER_ID");
-
+        existingComment = p.getString("EXIST_RATING");
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -55,13 +59,54 @@ public class RatingPopup extends AppCompatActivity {
             public void onClick(View view) {
                 if(mRatingBar.getRating() >= 0 && mRatingBar.getRating() <= 5){
                     float rating = mRatingBar.getRating();
-                    sendRating(rating);
+                    if(existingComment != null){
+                        deleteRating(existingComment, rating);
+                    }
+                    else{
+                        sendRating(rating);
+
+                    }
                 }
                 else{
                     mMessage.setText("You have to select stars");
                 }
             }
         });
+    }
+
+    private void deleteRating(String existingComment, final Float rating) {
+        ///rate/{username}/{beerId}/{stars}
+        if(UserActivity.user != null){
+            String url = HOST_URL +
+                    "deleteComment/" +
+                    existingComment;
+
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Rating this beer");
+            progressDialog.show();
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            sendRating(rating);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            System.out.println("Error response");
+                            Toast.makeText(RatingPopup.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }
+        else{
+            mMessage.setText("Please login to rate beers");
+        }
     }
 
     private void sendRating(float rating) {
@@ -83,6 +128,12 @@ public class RatingPopup extends AppCompatActivity {
                         public void onResponse(String response) {
                             Toast.makeText(RatingPopup.this, "Beer was rated", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+                            try {
+                                JSONArray jsonArray = new JSONArray(response);
+                                BeerData.setBeerData(RatingPopup.this, jsonArray);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             Intent returnIntent = new Intent();
                             setResult(Activity.RESULT_OK, returnIntent);
                             finish();
