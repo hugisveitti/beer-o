@@ -12,8 +12,9 @@
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="370dp"
         android:ems="10"
+        android:layout_gravity="center_horizontal"
         android:inputType="textPassword"
-        tools:hint="@string/textview_password"
+        android:hint="@string/textview_password"
         />
 
 
@@ -26,8 +27,9 @@
         android:layout_marginTop="300dp"
         android:layout_marginHorizontal="80dp"
         android:ems="10"
+        android:layout_gravity="center_horizontal"
         android:inputType="textPersonName"
-        tools:hint="@string/textview_username"
+        android:hint="@string/textview_username"
         />
 
     <Button
@@ -37,6 +39,7 @@
         android:layout_marginHorizontal="80dp"
         android:layout_marginVertical="412dp"
         android:text="@string/button_login"
+        android:layout_gravity="center_horizontal"
         android:background="@color/colorPrimaryDark"/>
 
 
@@ -46,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
         android:layout_marginHorizontal="80dp"
-
+        android:layout_gravity="center_horizontal"
         android:textSize="16dp"
         android:text="@string/login_fragment"
         />
@@ -57,5 +60,6 @@
         android:layout_height="212dp"
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/roundlogo" />
+        android:src="@drawable/roundlogo"
+        android:layout_gravity="center_horizontal"/>
 </FrameLayout>
