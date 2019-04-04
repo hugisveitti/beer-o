@@ -102,6 +102,13 @@ public class BeerActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
 
+        MenuItem menuItem2 = menu.getItem(2);
+        if (UserActivity.user == null) {
+            menuItem2.setTitle(getResources().getString(R.string.nav_login));
+        } else {
+            menuItem2.setTitle(getResources().getString(R.string.nav_my_page));
+        }
+
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -114,11 +121,13 @@ public class BeerActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_search:
+                        Intent intent2 = new Intent(BeerActivity.this, SearchActivity.class);
+                        startActivity(intent2);
                         break;
 
                     case R.id.nav_my_page:
-                        Intent intent2 = new Intent(BeerActivity.this, UserActivity.class);
-                        startActivity(intent2);
+                        Intent intent3 = new Intent(BeerActivity.this, UserActivity.class);
+                        startActivity(intent3);
                         break;
                 }
                 return false;
