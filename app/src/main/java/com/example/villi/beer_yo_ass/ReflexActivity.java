@@ -3,6 +3,7 @@ package com.example.villi.beer_yo_ass;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,8 @@ public class ReflexActivity extends AppCompatActivity {
     private TextView timerTextView;
     private long startTime = 0;
 
+    private MediaPlayer easy;
+    private MediaPlayer intense;
     private Boolean timeRunning = false;
     private Boolean gameRunning = false;
     private int errorCount = 0;
@@ -69,24 +72,25 @@ public class ReflexActivity extends AppCompatActivity {
     private String gameString = "";
     private int currentPlace = 1;
     private String[] drunkList = {"You are not even drunk, stop cheating!",
+    "Oh wow, Mr. Healthy over here, never drinks beer and probably does cross-fit.",
     "One beer, that´s all?! Step it up",
     "I have seen a preschooler drunker than you",
-    "You could use a beer",
+    "You could use a beer, the Lager gods are getting angry",
     "You can see clearly now the beer has gone",
     "You´re not as think as you drunk you are",
     "You are drinking like a big boy now",
-    "Two beer or not two beers, you have had seven!",
+    "Two beer or not two beers, you have at least had seven!",
     "Seeing double? You are making your mother proud!",
-    "Your blood is literally 9% alcohol",
+    "Your blood is literally 13% alcohol",
     "BEER YOUR ASS",
-    "You are getting quite drunk sir, should I tell Jeeves to fetch a car?",
+    "You are getting quite drunk sir, should I ring Jeeves to fetch a car?",
     "Please stop drinking, little Timmy needs money for surgery.",
     "Things are out of control, you are drunk like grandpa AGAIN!",
     "STOP in the name of lov... IPA",
-    "I Would be surprised if you remember your name.",
+    "I would be surprised if you remember your name.",
     "I am an app and I am ashamed of you, get some help",
     "Call your ex and tell her you´ve changed, you know it´s a good idea.",
-    "Thats it, Im cutting you off. GO HOME",
+    "That´s it, Im cutting you off. GO HOME",
     "You are something beyond drunk, go home!"
     };
     //runs without a timer by reposting this handler at the end of the runnable
@@ -102,11 +106,29 @@ public class ReflexActivity extends AppCompatActivity {
             seconds = seconds % 60;
             mill = mill % 100;
 
+            updateDescription(seconds);
             timerTextView.setText(String.format("%d:%02d:%02d", minutes, seconds,mill));
-
             timerHandler.postDelayed(this, 50);
         }
     };
+
+    private void updateDescription(int sec) {
+        if(sec < 5){
+            drunkDescription.setText("We are assessing your situation darling.");
+        }
+        else{
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            System.out.println("alpha: " + alpha.length());
+            System.out.println("current: " + currentPlace);
+            float scalar = (float) (currentPlace-1) / alpha.length();
+            System.out.println("Scalar: " + scalar);
+            float score = (seconds + errorCount*4)/scalar;
+            System.out.println("Score: " + score);
+            drunkDescription.setText(findDescription(score));
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +150,10 @@ public class ReflexActivity extends AppCompatActivity {
         resultsContainer.setVisibility(View.GONE);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         mTlayout = (TableLayout) findViewById(R.id.mTlayout);
+
+        easy = MediaPlayer.create(ReflexActivity.this,R.raw.easy);
+        intense = MediaPlayer.create(ReflexActivity.this,R.raw.intense);
+        startMusic();
         createButtons(true);
 
         restartButton.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +164,14 @@ public class ReflexActivity extends AppCompatActivity {
         });
     }
 
+    private void startMusic() {
+        easy.start();
+        easy.setLooping(true);
+    }
+
     private void restartGame() {
+        toggleMusic(true);
+        drunkDescription.setText("");
         gameStats.setVisibility(View.GONE);
         resultsContainer.setVisibility(View.GONE);
         timerTextView.setText("0");
@@ -164,9 +197,13 @@ public class ReflexActivity extends AppCompatActivity {
         }
         else{
             char[] alphabetTemp = alphabet.clone();
-            values = shuffleArray(alphabetTemp);
+            char[] shortArray = new char[alphabet.length - (currentPlace-1)];
+            for(int i = currentPlace-1; i < alphabetTemp.length; i++){
+                shortArray[i - (currentPlace-1)] = alphabetTemp[i];
+            }
+            values = shuffleArray(shortArray);
         }
-        for(int i = 0; i < alphabet.length; i++){
+        for(int i = 0; i < values.length; i++){
             if (i % 5 == 0) {
                 tr = new TableRow(this);
                 tr.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -197,6 +234,7 @@ public class ReflexActivity extends AppCompatActivity {
                         gameRunning = true;
                         gameStats.setVisibility(View.VISIBLE);
                         resultsContainer.setVisibility(View.GONE);
+                        toggleMusic(false);
                     }
                     if(gameRunning){
                         timerHandler.postDelayed(timerRunnable, 0);
@@ -237,13 +275,16 @@ public class ReflexActivity extends AppCompatActivity {
     }
 
     private void gameOver() {
+        createButtons(false);
+        toggleMusic(true);
+        timeRunning = false;
+        gameRunning = false;
+        timerHandler.removeCallbacks(timerRunnable);
         resultsContainer.setVisibility(View.VISIBLE);
+
         long millis = System.currentTimeMillis() - startTime;
         int seconds = (int) (millis / 1000);
-        int minutes = seconds / 60;
-        int secondsConverted = seconds % 60;
-
-        int score = seconds + errorCount*4;
+        float score = seconds + errorCount*4;
         results.setText("Your score is");
         scoreDisplay.setText(String.valueOf(score));
         drunkDescription.setText(findDescription(score));
@@ -251,16 +292,16 @@ public class ReflexActivity extends AppCompatActivity {
 
     }
 
-    private void sendToDatabase(int score) {
+    private void sendToDatabase(float score) {
 
     }
 
-    private String findDescription(int score) {
-        if(score < 60){
+    private String findDescription(float score) {
+        if(score < 30){
             return drunkList[0];
         }
         for(int i = 0; i < drunkList.length-1; i++){
-            if(score < 60 + (i*10)){
+            if(score < 30 + (i*5)){
                 return drunkList[i];
             }
         }
@@ -272,8 +313,21 @@ public class ReflexActivity extends AppCompatActivity {
         super.onPause();
         timerHandler.removeCallbacks(timerRunnable);
         timeRunning = false;
+        easy.stop();
+        intense.stop();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(gameRunning){
+            intense.start();
+        }
+        else{
+            easy.start();
+        }
+
+    }
 
     private String[] shuffleArray(char[] ar)
     {
@@ -288,12 +342,25 @@ public class ReflexActivity extends AppCompatActivity {
             ar[index] = ar[i];
             ar[i] = a;
         }
-        for (int i = 0; i < alphabet.length; i++)
+        for (int i = 0; i < ar.length; i++)
         {
             ret[i] = String.valueOf(ar[i]);
         }
         return ret;
     }
 
-
+    private void toggleMusic(Boolean normal){
+        if(!normal){
+            easy.stop();
+            intense = MediaPlayer.create(ReflexActivity.this,R.raw.intense);
+            intense.start();
+            intense.setLooping(true);
+        }
+        else{
+            intense.stop();
+            easy = MediaPlayer.create(ReflexActivity.this,R.raw.easy);
+            easy.start();
+            easy.setLooping(true);
+        }
+    }
 }
