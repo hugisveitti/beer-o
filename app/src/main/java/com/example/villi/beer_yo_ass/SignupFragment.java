@@ -49,6 +49,7 @@ public class SignupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
 
         text_username = view.findViewById(R.id.text_username);
+        text_username.requestFocus();
         text_password = view.findViewById(R.id.text_password);
         button_signup = view.findViewById(R.id.button_signup);
         got_account = view.findViewById(R.id.got_account);

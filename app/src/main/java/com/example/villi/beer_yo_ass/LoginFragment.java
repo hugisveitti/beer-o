@@ -49,6 +49,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         text_username = view.findViewById(R.id.text_username);
+        text_username.requestFocus();
         text_password = view.findViewById(R.id.text_password);
         button_login = view.findViewById(R.id.button_login);
         no_account = view.findViewById(R.id.no_account);
@@ -93,9 +94,8 @@ public class LoginFragment extends Fragment {
         String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/login/"+username+"/"+password;
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading data...");
+        progressDialog.setMessage("Logging in...");
         progressDialog.show();
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL_DATA,
                 new Response.Listener<String>() {
