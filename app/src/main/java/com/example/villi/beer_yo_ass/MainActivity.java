@@ -59,11 +59,13 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-
+        MenuItem menuItem2 = menu.getItem(2);
         if (UserActivity.user == null) {
             mUser_textview.setText("Notandi ekki skráður inn");
+            menuItem2.setTitle(getResources().getString(R.string.nav_login));
         } else {
             mUser_textview.setText("Velkominn " + UserActivity.user);
+            menuItem2.setTitle(getResources().getString(R.string.nav_my_page));
         }
 
         reflexButton.setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,8 @@
     <!-- Strings related to navigation bar -->
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
-    <string name="nav_my_page">Login</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_my_page">My page</string>
 
 
     <string name="title_activity_login">Sign in</string>

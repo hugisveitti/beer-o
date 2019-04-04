@@ -54,6 +54,7 @@ public class SignupFragment extends Fragment {
         button_signup = view.findViewById(R.id.button_signup);
         got_account = view.findViewById(R.id.got_account);
 
+        UserActivity.setMenuItemText(2, getResources().getString(R.string.nav_login));
 
         // Switch to the login fragment
         got_account.setOnClickListener(new View.OnClickListener() {
