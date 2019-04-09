@@ -89,14 +89,15 @@
 
     <TextView
         android:id="@+id/greeting"
-        android:layout_width="380dp"
-        android:layout_height="48dp"
+        android:layout_width="393dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
         android:gravity="center"
-        android:text="How fast can you type the alphabet? We´ll tell you how drunk you are!" />
+        android:text="@string/type_instructions"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/input"

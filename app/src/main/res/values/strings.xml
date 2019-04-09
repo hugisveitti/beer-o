@@ -62,6 +62,7 @@
     <string name="title_activity_rating_popup">RatingPopup</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_reflex">ReflexActivity</string>
+    <string name="type_instructions">How fast can you <font color='#F50000'>type the alphabet</font>! We´ll tell you how drunk you are!</string>
 
 
 </resources>
