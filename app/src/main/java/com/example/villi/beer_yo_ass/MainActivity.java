@@ -43,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
     private TextView mUser_textview;
+    private TextView mScoreText;
+    private TextView mNr1;
+    private TextView mNr2;
+    private TextView mNr3;
+
+    private int[] mBestScore = {-1, -1 , -1};
+    private String[] mBestScoreName = {"", "", ""};
+
+    private static final String URL = "https://beer-yo-ass-backend.herokuapp.com/getAllGameScores";
+
     private ArrayList<JSONObject> mbeer_data = new ArrayList<>();
     private Button reflexButton;
 
@@ -54,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
         mUser_textview = findViewById(R.id.user_textview);
         reflexButton = findViewById(R.id.reflexButton);
-
+        mNr1 = (TextView) findViewById(R.id.nr1);
+        mNr2 = (TextView) findViewById(R.id.nr2);
+        mNr3 = (TextView) findViewById(R.id.nr3);
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
@@ -103,13 +115,78 @@ public class MainActivity extends AppCompatActivity {
 
         // The data is only loaded if the data array is empty
         mbeer_data = BeerData.getBeer_data();
-        System.out.println("Wassupfool");
-        System.out.println(BeerData.getBeerListSize());
 
         if(mbeer_data.size() == 0){
             mbeer_data = BeerData.loadBeerData(this);
         }
 
+        loadHighscores();
+    }
+
+    private void loadHighscores() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            // add the beers to ArrayList of beer
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                int thisScore = Integer.parseInt(String.valueOf(jsonArray.getJSONObject(i).get("score")));
+                                if((thisScore < mBestScore[0] || mBestScore[0] == -1) && thisScore > 0){
+                                    mBestScore[0] = thisScore;
+                                    mBestScoreName[0] = String.valueOf(jsonArray.getJSONObject(i).get("username"));
+                                }
+                                else if((thisScore < mBestScore[1] || mBestScore[1] == -1) && thisScore > 0){
+                                    mBestScore[1] = thisScore;
+                                    mBestScoreName[1] = String.valueOf(jsonArray.getJSONObject(i).get("username"));
+                                }
+                                else if((thisScore < mBestScore[2] || mBestScore[2] == -1) && thisScore > 0){
+                                    mBestScore[2] = thisScore;
+                                    mBestScoreName[2] = String.valueOf(jsonArray.getJSONObject(i).get("username"));
+                                }
+                            }
+                            updateScore();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        System.out.println("Error response");
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void updateScore() {
+        if (mBestScore[0] > 0){
+            mNr1.setText("1. " + mBestScoreName[0] + " - " + mBestScore[0]);
+        }
+        else{
+            mNr1.setText("1. No top score");
+        }
+        if (mBestScore[1] > 0){
+            mNr2.setText("2. " + mBestScoreName[1] + " - " + mBestScore[1]);
+        }
+        else{
+            mNr2.setText("2. No top score");
+        }
+        if (mBestScore[2] > 0){
+            mNr3.setText("3. " + mBestScoreName[2] + " - " + mBestScore[2]);
+        }
+        else{
+            mNr3.setText("3. No top score");
+        }
     }
 
 }

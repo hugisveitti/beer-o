@@ -16,7 +16,7 @@
         />
 
     <FrameLayout
-        android:id="@+id/login_form"
+        android:id="@+id/user_form"
         android:name="com.example.villi.beer_yo_ass.LoginFragment"
         android:layout_width="match_parent"
         android:layout_height="676dp"

@@ -19,7 +19,7 @@ public class UserActivity extends AppCompatActivity {
 
     private static BottomNavigationView bottomNavigation;
     private LoginFragment loginFragment;
-    public static String user = "villi";
+    public static String user = null;
     public UserPageFragment userPageFragment;
 
 
@@ -76,7 +76,7 @@ public class UserActivity extends AppCompatActivity {
     private void setLoginFragment(LoginFragment fragment) {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .replace(R.id.login_form, fragment)
+                .replace(R.id.user_form, fragment)
                 .commit();
 
     }
@@ -85,7 +85,7 @@ public class UserActivity extends AppCompatActivity {
     private void setUserpageFragment(UserPageFragment fragment) {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .replace(R.id.login_form, fragment)
+                .replace(R.id.user_form, fragment)
                 .commit();
     }
 

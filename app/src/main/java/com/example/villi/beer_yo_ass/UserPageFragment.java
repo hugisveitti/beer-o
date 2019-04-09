@@ -6,6 +6,7 @@
 
 package com.example.villi.beer_yo_ass;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class UserPageFragment extends Fragment {
     private TextView mMyBeerlistsMessage;
     private RecyclerView mMyBeersList;
     private RecyclerView mMyBeerlistsList;
+    private TextView highscore;
     private Button mLogOutButton;
 
     private ArrayList<JSONObject> mBeerlist_data = new ArrayList<>();
@@ -58,6 +60,8 @@ public class UserPageFragment extends Fragment {
     private ArrayList<String> mbeer_volume = new ArrayList<>();
     private ArrayList<String> mbeer_price = new ArrayList<>();
     private ArrayList<String> mbeer_alcohol = new ArrayList<>();
+
+    private String score;
 
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String MY_BEERLISTS_URL = HOST_URL + "getMyDrinklists/";
@@ -82,8 +86,8 @@ public class UserPageFragment extends Fragment {
         mMyBeerlistsMessage = (TextView) view.findViewById(R.id.myBeerlistsMessage);
         mMyBeersList = (RecyclerView) view.findViewById(R.id.mybeersList);
         mMyBeerlistsList = (RecyclerView) view.findViewById(R.id.mybeerlistsList);
-
-        mWelcomeMessage.setText("Hello my friend " + UserActivity.user);
+        highscore = (TextView) view.findViewById(R.id.highscore);
+        mWelcomeMessage.setText("Nice to see you " + UserActivity.user);
 
         UserActivity.setMenuItemText(2, getResources().getString(R.string.nav_my_page));
 
@@ -97,7 +101,36 @@ public class UserPageFragment extends Fragment {
             }
         });
         loadBeerlistData();
+        loadHighScore();
         return view;
+    }
+
+    private void loadHighScore() {
+        String url = HOST_URL +
+                "getUserGameScore/" +
+                UserActivity.user;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                            score = response;
+                            if(Integer.parseInt(score) > 0){
+                                highscore.setText("Your best score is: " + score);
+                            }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error response");
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
     }
 
     private void loadBeerlistData() {

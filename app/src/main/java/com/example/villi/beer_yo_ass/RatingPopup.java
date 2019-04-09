@@ -126,14 +126,14 @@ public class RatingPopup extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(RatingPopup.this, "Beer was rated", Toast.LENGTH_SHORT).show();
+                            /*Toast.makeText(RatingPopup.this, "Beer was rated", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             try {
                                 JSONArray jsonArray = new JSONArray(response);
                                 BeerData.setBeerData(RatingPopup.this, jsonArray);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            }
+                            }*/
                             Intent returnIntent = new Intent();
                             setResult(Activity.RESULT_OK, returnIntent);
                             finish();

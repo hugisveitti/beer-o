@@ -44,7 +44,6 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
     private static final String ADD_TO_BEERLIST_URL = HOST_URL + "addToDrinklist/";
 
-
     public RecyclerViewAdapterBeerlist(Context mContext, ArrayList<String> beerlistName, ArrayList<String> beerlistId, String beerId, String type, ArrayList<JSONObject> mBeerlist_data) {
         this.mBeerlistName = beerlistName;
         this.mBeerlistId = beerlistId;
@@ -92,7 +91,7 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
                 @Override
                 public void onClick(View view) {
                     String thisId = mBeerlistId.get(position);
-                    Toast.makeText(mContext, "Beerlist #" + thisId, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Beerlist #" + mBeerlistName.get(position), Toast.LENGTH_SHORT).show();
 
                     ArrayList<String> mbeerlist_data_string = new ArrayList<String>();
 
@@ -104,6 +103,7 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
 
                     intent1.putStringArrayListExtra("BEERLIST_DATA", mbeerlist_data_string);
                     intent1.putExtra("BEERLIST_ID", thisId);
+                    intent1.putExtra("BEERLIST_NAME", mBeerlistName.get(position));
                     mContext.startActivities(new Intent[]{intent1});                }
             });
         }

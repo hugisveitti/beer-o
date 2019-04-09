@@ -9,7 +9,9 @@
         android:id="@+id/userpageGreeting"
         android:layout_width="245dp"
         android:layout_height="52dp"
+        android:layout_alignParentStart="true"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:text="Hello user"
         android:textSize="24sp" />
@@ -24,20 +26,22 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="22dp"
         android:background="@color/buttonRed"
-        android:text="Log out" />
+        android:text="Log out"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mybeersList"
-        android:layout_width="347dp"
-        android:layout_height="217dp"
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="400dp" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="450dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mybeerlistsList"
-        android:layout_width="340dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="150dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="190dp" />
 
     <TextView
         android:id="@+id/myBeerlistsMessage"
@@ -45,8 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="360dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="410dp"
         android:text="These are your beers:"
         android:textSize="20dp" />
 
@@ -54,8 +58,20 @@
         android:id="@+id/mybeersMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="140dp"
         android:text="These are your beerlists:"
         android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/highscore"
+        android:layout_width="192dp"
+        android:layout_height="31dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="94dp"
+        android:textSize="14dp"
+        android:text="Test your skill in our game" />
 </RelativeLayout>

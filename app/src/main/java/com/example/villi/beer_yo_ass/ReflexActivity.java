@@ -27,6 +27,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -62,6 +69,8 @@ public class ReflexActivity extends AppCompatActivity {
 
     private TextView timerTextView;
     private long startTime = 0;
+
+    private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
 
     private MediaPlayer easy;
     private MediaPlayer intense;
@@ -119,12 +128,8 @@ public class ReflexActivity extends AppCompatActivity {
         else{
             long millis = System.currentTimeMillis() - startTime;
             int seconds = (int) (millis / 1000);
-            System.out.println("alpha: " + alpha.length());
-            System.out.println("current: " + currentPlace);
             float scalar = (float) (currentPlace-1) / alpha.length();
-            System.out.println("Scalar: " + scalar);
             float score = (seconds + errorCount*4)/scalar;
-            System.out.println("Score: " + score);
             drunkDescription.setText(findDescription(score));
         }
 
@@ -224,7 +229,6 @@ public class ReflexActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if (!gameRunning) {
                         input.setText("...");
                         results.setText("");
@@ -293,7 +297,31 @@ public class ReflexActivity extends AppCompatActivity {
     }
 
     private void sendToDatabase(float score) {
+        int intscore = Math.round(score);
+        if(UserActivity.user != null){
+            String url = HOST_URL +
+                    "newGameScore/" +
+                    UserActivity.user + "/" +
+                    + intscore;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(ReflexActivity.this, "Score saved", Toast.LENGTH_SHORT).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Error response");
+                            Toast.makeText(ReflexActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
+            RequestQueue requestQueue = Volley.newRequestQueue(ReflexActivity.this);
+            requestQueue.add(stringRequest);
+        }
     }
 
     private String findDescription(float score) {

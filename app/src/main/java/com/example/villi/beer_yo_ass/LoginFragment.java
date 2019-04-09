@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.popBackStackImmediate();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.login_form, signupFragment)
+                        .replace(R.id.user_form, signupFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -110,17 +110,16 @@ public class LoginFragment extends Fragment {
 
                             if (response.equals("true")) {
                                 UserActivity.user = username;
-                                Toast.makeText(getActivity(), "user = " + UserActivity.user, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Velkomin/n " + UserActivity.user, Toast.LENGTH_SHORT).show();
                                 userPageFragment = new UserPageFragment();
 
                                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 fragmentManager.popBackStackImmediate();
                                 fragmentManager.beginTransaction()
-                                        .replace(R.id.login_form, userPageFragment)
+                                        .replace(R.id.user_form, userPageFragment)
                                         .commit();
                             } else {
                                 Toast.makeText(getActivity(), "vitlaust notenda nafn eða lykilorð", Toast.LENGTH_SHORT).show();
-
                             }
 
                     }

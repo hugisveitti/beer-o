@@ -148,15 +148,11 @@ public class RecyclerViewAdapterBeerlistPage extends RecyclerView.Adapter<Recycl
                      beerId + "/" +
                      !checked;
 
-        final ProgressDialog progressDialog = new ProgressDialog(mContext);
-        progressDialog.setMessage("Updating your beerlist...");
-        progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
                         Boolean success = Boolean.valueOf(response);
                         if(success){
                             checkedList.set(position, !checked);
@@ -167,7 +163,6 @@ public class RecyclerViewAdapterBeerlistPage extends RecyclerView.Adapter<Recycl
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
                         System.out.println("Error response");
                         Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_SHORT).show();
 

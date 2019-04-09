@@ -16,7 +16,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:layout_gravity="center_horizontal"
-        android:text="@string/textview_password"
+        android:hint="@string/textview_password"
         />
 
     <EditText
@@ -30,7 +30,7 @@
         android:layout_gravity="center_horizontal"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/textview_username"
+        android:hint="@string/textview_username"
         />
 
     <Button
@@ -62,7 +62,7 @@
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/roundlogo" />
+        android:src="@drawable/roundblue" />
 
 
 </FrameLayout>

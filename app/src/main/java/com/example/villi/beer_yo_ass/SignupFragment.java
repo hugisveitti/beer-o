@@ -35,6 +35,7 @@ public class SignupFragment extends Fragment {
     private TextView text_password;
     private TextView got_account;
     private LoginFragment loginFragment;
+    private UserPageFragment userPageFragment;
 
 
     public SignupFragment() {
@@ -66,7 +67,7 @@ public class SignupFragment extends Fragment {
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.popBackStackImmediate();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.login_form, loginFragment)
+                        .replace(R.id.user_form, loginFragment)
                         .addToBackStack(null)
                         .commit();
 
@@ -91,11 +92,11 @@ public class SignupFragment extends Fragment {
     /* attemptSignup sends a GET request on a URL and if it returns false
      * the username is taken otherwise it returns true and user is logged in
      */
-    private void attemptSignup(final String username, String password) {
+    private void attemptSignup(final String username, final String password) {
         String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/signup/"+username+"/"+password;
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading data...");
+        progressDialog.setMessage("Creating user");
         progressDialog.show();
 
         System.out.println(URL_DATA);
@@ -112,8 +113,7 @@ public class SignupFragment extends Fragment {
                         if (response.equals("false")) {
                             Toast.makeText(getActivity(), "Notandanafn ekki laust", Toast.LENGTH_SHORT).show();
                         } else {
-                            UserActivity.user = username;
-                            Toast.makeText(getActivity(), "Velkominn " + username, Toast.LENGTH_SHORT).show();
+                            attemptLogin(username, password);
                         }
 
                     }
@@ -134,5 +134,50 @@ public class SignupFragment extends Fragment {
 
     }
 
+    private void attemptLogin(final String username, String password) {
+        String URL_DATA = "https://beer-yo-ass-backend.herokuapp.com/login/"+username+"/"+password;
 
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URL_DATA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+
+                        System.out.println(response);
+                        System.out.println("Náði að sækja");
+
+                        if (response.equals("true")) {
+                            UserActivity.user = username;
+                            Toast.makeText(getActivity(), "Velkomin/n " + UserActivity.user, Toast.LENGTH_SHORT).show();
+                            userPageFragment = new UserPageFragment();
+
+                            android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            fragmentManager.popBackStackImmediate();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.user_form, userPageFragment)
+                                    .commit();
+                        } else {
+                            Toast.makeText(getActivity(), "vitlaust notenda nafn eða lykilorð", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        System.out.println("Error response");
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+        // Use Volley to send request on database
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
 }

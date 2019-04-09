@@ -44,18 +44,7 @@ public class BeerlistActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
 
     //Views
-    private TextView mViewName;
-    private TextView mViewVolume;
-    private TextView mViewAlcohol;
-    private TextView mViewPrice;
-    private TextView mViewTate;
-    private TextView mViewStars;
-    private ImageView mViewImage;
-    private EditText mCommentText;
-    private Button mCommentButton;
-    private ImageButton mHeartButton;
-    private ImageButton mBeerlistButton;
-    private ImageButton mRatingButton;
+    private TextView mBeerlistTitle;
 
     //URL and Request parameters
     private static final String HOST_URL = "https://beer-yo-ass-backend.herokuapp.com/";
@@ -88,6 +77,9 @@ public class BeerlistActivity extends AppCompatActivity {
 
         ArrayList<JSONObject> beerlist_list = (ArrayList<JSONObject>) getIntent().getSerializableExtra("BEERLIST_DATA");
         beerlistId = (String) getIntent().getStringExtra("BEERLIST_ID");
+        beerlistName = (String) getIntent().getStringExtra("BEERLIST_NAME");
+        mBeerlistTitle = (TextView) findViewById(R.id.BeerlistName);
+        mBeerlistTitle.setText(beerlistName);
         loadBeerlistData();
     }
 
