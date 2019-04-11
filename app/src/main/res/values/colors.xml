@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#EBC248</color>
     <color name="colorAccent">#FF4081</color>
     <color name="errorRed">#F50000</color>
+    <color name="blueText">#000CF5</color>
     <color name="black">#000000</color>
     <color name="buttonYellow">#8BC34A</color>
     <color name="buttonRed">#C3544A</color>
+    <color name="textColor">#808080</color>
+
+
 </resources>

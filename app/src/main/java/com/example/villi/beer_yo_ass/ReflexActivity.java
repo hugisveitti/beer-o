@@ -81,7 +81,7 @@ public class ReflexActivity extends AppCompatActivity {
     private String gameString = "";
     private int currentPlace = 1;
     private String[] drunkList = {"You are not even drunk, stop cheating!",
-    "Oh wow, Mr. Healthy over here, never drinks beer and probably does cross-fit.",
+    "Oh wow, Mr. Healthy Body over here, never drinks beer and probably does cross-fit.",
     "One beer, that´s all?! Step it up",
     "I have seen a preschooler drunker than you",
     "You could use a beer, the Lager gods are getting angry",
@@ -177,6 +177,7 @@ public class ReflexActivity extends AppCompatActivity {
     private void restartGame() {
         toggleMusic(true);
         drunkDescription.setText("");
+        drunkDescription.setTextColor(getResources().getColor(R.color.textColor));
         gameStats.setVisibility(View.GONE);
         resultsContainer.setVisibility(View.GONE);
         timerTextView.setText("0");
@@ -292,6 +293,7 @@ public class ReflexActivity extends AppCompatActivity {
         results.setText("Your score is");
         scoreDisplay.setText(String.valueOf(score));
         drunkDescription.setText(findDescription(score));
+        drunkDescription.setTextColor(getResources().getColor(R.color.black));
         sendToDatabase(score);
 
     }
