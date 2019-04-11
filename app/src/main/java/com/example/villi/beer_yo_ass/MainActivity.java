@@ -136,10 +136,17 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 int thisScore = Integer.parseInt(String.valueOf(jsonArray.getJSONObject(i).get("score")));
                                 if((thisScore < mBestScore[0] || mBestScore[0] == -1) && thisScore > 0){
+                                    mBestScore[2] = mBestScore[1];
+                                    mBestScoreName[2] = mBestScoreName[1];
+                                    mBestScore[1] = mBestScore[0];
+                                    mBestScoreName[1] = mBestScoreName[0];
                                     mBestScore[0] = thisScore;
                                     mBestScoreName[0] = String.valueOf(jsonArray.getJSONObject(i).get("username"));
+
                                 }
                                 else if((thisScore < mBestScore[1] || mBestScore[1] == -1) && thisScore > 0){
+                                    mBestScore[2] = mBestScore[1];
+                                    mBestScoreName[2] = mBestScoreName[1];
                                     mBestScore[1] = thisScore;
                                     mBestScoreName[1] = String.valueOf(jsonArray.getJSONObject(i).get("username"));
                                 }

@@ -17,7 +17,7 @@
 
     <RatingBar
         android:id="@+id/beerRatingBar"
-        android:layout_width="246dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rateBeerText"
         android:layout_alignParentStart="true"

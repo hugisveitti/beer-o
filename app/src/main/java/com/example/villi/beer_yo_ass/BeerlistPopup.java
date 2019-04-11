@@ -116,6 +116,7 @@ public class BeerlistPopup extends AppCompatActivity {
                         Toast.makeText(BeerlistPopup.this, "Beerlist created", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         try {
+                            System.out.println(response);
                             JSONObject newBeerlist = new JSONObject(response);
                             int beerlistId = newBeerlist.getInt("drinklistId");
                             addBeerToDrinklist(beerlistId);

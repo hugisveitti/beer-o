@@ -98,7 +98,6 @@ public class RecyclerViewAdapterBeerlist extends RecyclerView.Adapter<RecyclerVi
                     for(int i = 0; i < mBeerlist_data.size(); i++){
                         mbeerlist_data_string.add(mBeerlist_data.get(i).toString());
                     }
-                    System.out.println(mbeerlist_data_string.get(1));
                     Intent intent1 = new Intent(mContext, BeerlistActivity.class);
 
                     intent1.putStringArrayListExtra("BEERLIST_DATA", mbeerlist_data_string);

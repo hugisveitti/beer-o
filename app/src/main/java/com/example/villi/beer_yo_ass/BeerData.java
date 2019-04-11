@@ -72,9 +72,6 @@ public class BeerData {
                                 mbeer_data.add(jsonArray.getJSONObject(i));
                             }
 
-                            System.out.println("Versace");
-                            System.out.println(mbeer_data.size());
-
 
 
                         } catch (JSONException e) {

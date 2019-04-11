@@ -498,7 +498,7 @@ public class BeerActivity extends AppCompatActivity {
     private void initRecyclerView(ArrayList<JSONObject> comment_data) {
 
         try {
-            for (int i = 0; i < comment_data.size(); i++) {
+            for (int i = comment_data.size()-1; i >= 0; i--) {
                 //ratings búa til null comment
                 if(!comment_data.get(i).isNull("title")){
                     commenter_name.add(comment_data.get(i).get("username") + "");
