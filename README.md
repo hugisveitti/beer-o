@@ -11,4 +11,6 @@ There are two users loaded in the beginning, they are <br />
 user: **hugi** pw: **hugi** <br />
 user: **villi** pw: **villi** <br />
 <br />
+
+Opna í android studio og keyra. Það ætti ekki að vera mál.
 But you can also create your own users.
